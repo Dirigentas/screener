@@ -1,8 +1,4 @@
-package screener.db;
-
-import java.util.ArrayList;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
+package screener.utils;
 
 import jakarta.persistence.*;
 
@@ -17,21 +13,13 @@ public class Company {
     private Double ev; // ev stands for Enterprise Value (double)
     private String metricType;
     private Metrics metric; // matches "metric" object
+    
 
     public Metrics getMetric() {
         return metric;
     }
     public void setMetric(Metrics metric) {
         this.metric = metric;
-    }
-
-    public class Metrics {
-        @JsonProperty("10DayAverageTradingVolume")
-        private double _10DayAverageTradingVolume; // field names must match JSON
-
-        // getter/setter
-        public double get_10DayAverageTradingVolume() { return _10DayAverageTradingVolume; }
-        public void set_10DayAverageTradingVolume(double value) { this._10DayAverageTradingVolume = value; }
     }
 
     public String getMetricType() {
@@ -72,6 +60,7 @@ public class Company {
     }
     @Override
     public String toString() {
-        return "Company [ticker=" + ticker + ", name=" + name + ", ev=" + ev + ", metricType=" + metricType + ", metrics" + metric.get(0) + "]";
+        return "Company [ticker=" + ticker + ", name=" + name + ", ev=" + ev + ", metricType=" + metricType
+                + ", metric=" + metric + "]";
     }
 }

@@ -41,6 +41,12 @@
             <artifactId>spring-boot-starter-webflux</artifactId>
             <version>4.0.0-RC1</version>
         </dependency>
+        <!-- provides data binding functionality, which means automatically converting (mapping) data between JSON and Java objects -->
+        <dependency>
+            <groupId>tools.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>3.0.1</version>
+        </dependency>
     </dependencies>
     
 
