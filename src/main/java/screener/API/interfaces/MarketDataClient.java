@@ -5,9 +5,9 @@ import tools.jackson.databind.JsonNode;
 
 public interface MarketDataClient {
 
-    Company getCompanyData(String ticker);
+    Company getCompanyData(String ticker, String metric);
 
-    String getRawJson(String ticker);
+    String getRawJson(String ticker, String metric);
     
-    JsonNode getCompanyJson(String ticker);
+    JsonNode getCompanyJson(String ticker, String metric);
 }

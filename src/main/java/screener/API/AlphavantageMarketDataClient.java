@@ -8,17 +8,19 @@ import screener.utils.Company;
 import tools.jackson.databind.JsonNode;
 
 @Service
-public class FinnhubMarketDataClient implements MarketDataClient {
+public class AlphavantageMarketDataClient implements MarketDataClient {
 
-    // @Value("${finnhub.api.token}")
+    // @Value("${alphavantage.api.token}")
     // private String apiToken;
 
-    private final WebClient client;
-    private final String token = "d42eropr01qorler208gd42eropr01qorler2090";
+    String test = "https://www.alphavantage.co/query?function=OVERVIEW&symbol=UPWK&apikey=A1AUVL6TFBYF1GHF";
 
-    public FinnhubMarketDataClient() {
+    private final WebClient client;
+    private final String token = "A1AUVL6TFBYF1GHF";
+
+    public AlphavantageMarketDataClient() {
         this.client = WebClient.builder()
-                .baseUrl("https://finnhub.io")
+                .baseUrl("https://www.alphavantage.co")
                 .build();
     }
 
@@ -26,10 +28,10 @@ public class FinnhubMarketDataClient implements MarketDataClient {
     public Company getCompanyData(String ticker, String metric) {
         return client.get()
                 .uri(uriBuilder -> uriBuilder
-                        .path("/api/v1/stock/metric")
+                        .path("/query")
+                        .queryParam("function", "OVERVIEW")
                         .queryParam("symbol", ticker)
-                        .queryParam("metric", "all")
-                        .queryParam("token", token)
+                        .queryParam("apikey", token)
                         .build())
                 .retrieve()
                 .bodyToMono(Company.class)
@@ -39,10 +41,10 @@ public class FinnhubMarketDataClient implements MarketDataClient {
     public String getRawJson(String ticker, String metric) {
     return client.get()
             .uri(uriBuilder -> uriBuilder
-                    .path("/api/v1/stock/metric")
+                    .path("/query")
+                    .queryParam("function", "OVERVIEW")
                     .queryParam("symbol", ticker)
-                    .queryParam("metric", "all")
-                    .queryParam("token", token)
+                    .queryParam("apikey", token)
                     .build())
             .retrieve()
             .bodyToMono(String.class)   // <--- get raw JSON as text
@@ -52,10 +54,10 @@ public class FinnhubMarketDataClient implements MarketDataClient {
     public JsonNode getCompanyJson(String ticker, String metric) {
         return client.get()
                 .uri(uriBuilder -> uriBuilder
-                        .path("/api/v1/stock/metric")
+                        .path("/query")
+                        .queryParam("function", metric)
                         .queryParam("symbol", ticker)
-                        .queryParam("metric", metric)
-                        .queryParam("token", token)
+                        .queryParam("apikey", token)
                         .build())
                 .retrieve()
                 .bodyToMono(JsonNode.class)

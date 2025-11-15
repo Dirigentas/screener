@@ -5,8 +5,9 @@ import java.util.ArrayList;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import screener.API.AlphavantageMarketDataClient;
 import screener.API.FinnhubMarketDataClient;
-import screener.utils.Company;
+import screener.API.interfaces.MarketDataClient;
 import screener.utils.FileReader;
 import screener.utils.JsonFileWriter;
 
@@ -34,15 +35,35 @@ public class ScreenerApplication { // Renamed to follow Spring convention
         // LocalDate date = LocalDate.now();
         
 
-        // Data saver to a json file-------------------
-        String dataProvider = "Finnhub";
+
+        // get all API endpoints data for all tickers from tickers.txt file----------------------
+        String pathForDataFiles;
+        JsonNode jsonData = null;
+        MarketDataClient finnhubMarketDataClient = new FinnhubMarketDataClient();
+        MarketDataClient alphavantageMarketDataClient = new AlphavantageMarketDataClient();
         ArrayList<String> tickers = FileReader.read("./rawData/tickers.txt");
+        
+        ArrayList<String> endpoints = new ArrayList<>();
+        endpoints.add("finnhub.all");
+        endpoints.add("alphavantage.OVERVIEW");
+        endpoints.add("alphavantage.INCOME_STATEMENT");
+        endpoints.add("alphavantage.BALANCE_SHEET");
+        endpoints.add("alphavantage.CASH_FLOW");
 
         for (String ticker : tickers) {
-            String path = "./rawData/" + ticker + "_" + dataProvider + "_" + date + ".json";
-            JsonNode jsonData = new FinnhubMarketDataClient().getCompanyJson(ticker);
-            JsonFileWriter.write(path, jsonData);
+            for (String endpoint : endpoints) {
+                
+                pathForDataFiles = "./rawData/" + ticker + "/" + endpoint + "_" + date + ".json";
+
+                if (endpoint.contains("finnhub")) {
+                    jsonData = finnhubMarketDataClient.getCompanyJson(ticker, endpoint.split("\\.")[1]);
+                    
+                } else if (endpoint.contains("alphavantage")) {
+                    jsonData = alphavantageMarketDataClient.getCompanyJson(ticker, endpoint.split("\\.")[1]);
+                }
+                JsonFileWriter.write(pathForDataFiles, jsonData);
+            }
         }
-        //----------------------------------------------
+        //---------------------------------------------------------------------------------------
     }
 }
