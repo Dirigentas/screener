@@ -1,4 +1,4 @@
-package screener.utils;
+package screener.db;
 
 import jakarta.persistence.*;
 
@@ -11,24 +11,15 @@ public class Company {
 
     private String name; //varying(50)
     private Double ev; // ev stands for Enterprise Value (double)
-    private String metricType;
-    private Metrics metric; // matches "metric" object
+    // private Metrics metric; // matches "metric" object
     
 
-    public Metrics getMetric() {
-        return metric;
-    }
-    public void setMetric(Metrics metric) {
-        this.metric = metric;
-    }
-
-    public String getMetricType() {
-        return metricType;
-    }
-
-    public void setMetricType(String metricType) {
-        this.metricType = metricType;
-    }
+    // public Metrics getMetric() {
+    //     return metric;
+    // }
+    // public void setMetric(Metrics metric) {
+    //     this.metric = metric;
+    // }
 
     public Company() {}
 
@@ -60,7 +51,6 @@ public class Company {
     }
     @Override
     public String toString() {
-        return "Company [ticker=" + ticker + ", name=" + name + ", ev=" + ev + ", metricType=" + metricType
-                + ", metric=" + metric + "]";
+        return "Company [ticker=" + ticker + ", name=" + name + ", ev=" + ev + ", metric=" + "metric" + "]";
     }
 }

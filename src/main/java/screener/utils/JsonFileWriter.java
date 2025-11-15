@@ -20,10 +20,10 @@ public class JsonFileWriter {
                 // Use mkdirs() to create all necessary parent directories
                 parentDir.mkdirs();
             }
-
             // 4. Write the JSON data to the file
             mapper.writerWithDefaultPrettyPrinter()
                   .writeValue(new File(path), data);
+                  
         } catch (Exception e) {
             System.out.println("Error writing JSON file: " + e.getMessage());
         }

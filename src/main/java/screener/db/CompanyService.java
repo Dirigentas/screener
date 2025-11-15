@@ -1,9 +1,6 @@
 package screener.db;
 
 import org.springframework.stereotype.Service;
-
-import screener.utils.Company;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Service

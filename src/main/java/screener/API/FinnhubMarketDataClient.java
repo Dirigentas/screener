@@ -4,17 +4,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import screener.API.interfaces.MarketDataClient;
-import screener.utils.Company;
+import screener.db.Company;
 import tools.jackson.databind.JsonNode;
 
 @Service
 public class FinnhubMarketDataClient implements MarketDataClient {
 
-    // @Value("${finnhub.api.token}")
-    // private String apiToken;
-
     private final WebClient client;
-    private final String token = "d42eropr01qorler208gd42eropr01qorler2090";
+    private final String token = "d42eropr01qorler208gd42eropr01qorler2090"; // 60 API calls/minute
 
     public FinnhubMarketDataClient() {
         this.client = WebClient.builder()

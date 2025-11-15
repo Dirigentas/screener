@@ -2,8 +2,6 @@ package screener.db;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import screener.utils.Company;
-
 /* Spring Data JPA
  * Lowest boilerplate code level
  * The modern industry standard, especially with Spring Boot.

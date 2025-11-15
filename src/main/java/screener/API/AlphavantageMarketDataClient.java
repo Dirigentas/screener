@@ -4,19 +4,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import screener.API.interfaces.MarketDataClient;
-import screener.utils.Company;
+import screener.db.Company;
 import tools.jackson.databind.JsonNode;
 
 @Service
 public class AlphavantageMarketDataClient implements MarketDataClient {
 
-    // @Value("${alphavantage.api.token}")
-    // private String apiToken;
-
-    String test = "https://www.alphavantage.co/query?function=OVERVIEW&symbol=UPWK&apikey=A1AUVL6TFBYF1GHF";
-
     private final WebClient client;
-    private final String token = "A1AUVL6TFBYF1GHF";
+    private final String token = "A1AUVL6TFBYF1GHF"; // 25 API calls/day
 
     public AlphavantageMarketDataClient() {
         this.client = WebClient.builder()
