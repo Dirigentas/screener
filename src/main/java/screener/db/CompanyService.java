@@ -15,15 +15,16 @@ public class CompanyService {
     }
 
     // Method to create and save a new company entry
-    public Company createNewCompany(String ticker, String name, Double ev) {
+    // public Company createNewCompany(String ticker, String name, Double ev) {
+    public Company createNewCompany(Company company) {
         
         // 1. Create a new Company object (the row data)
         // We do NOT set the 'id' because PostgreSQL will generate it
-        Company newCompany = new Company(ticker, name, ev);
+        // Company company = new Company(ticker, name, ev);
 
         // 2. Use the JpaRepository's 'save()' method to insert the object
         // The save method handles the underlying SQL INSERT statement for you.
-        Company savedCompany = companyRepository.save(newCompany);
+        Company savedCompany = companyRepository.save(company);
         
         // 3. Return the saved object (which now includes the auto-generated ID)
         return savedCompany;

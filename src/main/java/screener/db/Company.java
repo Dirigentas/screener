@@ -10,23 +10,16 @@ public class Company {
     private String ticker; //varying(10)
 
     private String name; //varying(50)
-    private Double ev; // ev stands for Enterprise Value (double)
-    // private Metrics metric; // matches "metric" object
+    private Double enterpriseValue; // ev stands for Enterprise Value (double)
     
 
-    // public Metrics getMetric() {
-    //     return metric;
-    // }
-    // public void setMetric(Metrics metric) {
-    //     this.metric = metric;
-    // }
 
     public Company() {}
 
-    public Company(String ticker, String name, Double ev) {
+    public Company(String ticker, String name, Double enterpriseValue) {
         this.ticker = ticker;
         this.name = name;
-        this.ev = ev;
+        this.enterpriseValue = enterpriseValue;
     }
     
     // Getters and Setters
@@ -43,14 +36,14 @@ public class Company {
     public void setName(String name) {
         this.name = name;
     }
-    public double getEv() {
-        return ev;
+    public double getEnterpriseValue() {
+        return enterpriseValue;
     }
-    public void setEv(double ev) {
-        this.ev = ev;
+    public void setEnterpriseValue(double enterpriseValue) {
+        this.enterpriseValue = enterpriseValue;
     }
     @Override
     public String toString() {
-        return "Company [ticker=" + ticker + ", name=" + name + ", ev=" + ev + ", metric=" + "metric" + "]";
+        return "Company [ticker=" + ticker + ", name=" + name + ", ev=" + enterpriseValue + "]";
     }
 }
