@@ -2,8 +2,6 @@ package screener;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -38,11 +36,12 @@ public class ScreenerApplication {
         company.setTicker(ticker);
         // company.setName("Netflix");
         company.setEnterpriseValue(ev);
-        addDataToDB(args, company);
+        // addDataToDB(args, company);
         //---------------------------------------------------------------------------------------
         
     }
 
+    @SuppressWarnings("unused")
     private static void getAPIEndpointsData() {
         String pathForDataFiles;
         MarketDataClient dataProvider = null;
@@ -76,6 +75,7 @@ public class ScreenerApplication {
         }
     }
 
+    @SuppressWarnings("unused")
     private static void addDataToDB(String[] args, Company company) {
 
         // 1. Start the Spring application context
@@ -86,7 +86,7 @@ public class ScreenerApplication {
         Company addedToDBCompany = companyService.createNewCompany(company);
         System.out.println("Successfully added company with ID: " + addedToDBCompany.getTicker());
     }
-
+    
     private static double readJsonData(String ticker) {
 
         String path = "rawData/" + ticker + "/finnhub.all_2025-11-15.json";

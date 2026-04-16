@@ -26,20 +26,20 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
-            <version>4.0.0-RC1</version>
+            <version>4.0.5</version>
         </dependency>
 
         <!-- Add this if you plan to expose your data via REST APIs (which is very common). -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <version>4.0.0-RC1</version>
+            <version>4.0.5</version>
         </dependency>
         <!-- for moder API call -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webflux</artifactId>
-            <version>4.0.0-RC1</version>
+            <version>4.0.5</version>
         </dependency>
         <!-- provides data binding functionality, which means automatically converting (mapping) data between JSON and Java objects -->
         <dependency>

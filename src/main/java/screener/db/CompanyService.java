@@ -1,7 +1,7 @@
 package screener.db;
 
-import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class CompanyService {
@@ -19,14 +19,13 @@ public class CompanyService {
     public Company createNewCompany(Company company) {
         
         // 1. Create a new Company object (the row data)
-        // We do NOT set the 'id' because PostgreSQL will generate it
-        // Company company = new Company(ticker, name, ev);
+        // Note: The 'ticker' acts as the primary key and must be set manually.
 
         // 2. Use the JpaRepository's 'save()' method to insert the object
         // The save method handles the underlying SQL INSERT statement for you.
         Company savedCompany = companyRepository.save(company);
         
-        // 3. Return the saved object (which now includes the auto-generated ID)
+        // 3. Return the saved object
         return savedCompany;
     }
 }
