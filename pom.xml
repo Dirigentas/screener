@@ -47,5 +47,11 @@
             <artifactId>jackson-databind</artifactId>
             <version>3.0.1</version>
         </dependency>
+        <!-- automatically generates boilerplate code like getters, setters, and constructors during compilation through simple annotations -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.46</version>
+        </dependency>
     </dependencies>
 </project>

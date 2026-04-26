@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import screener.API.interfaces.MarketDataClient;
-import screener.db.Company;
+import screener.dto.Company;
 import tools.jackson.databind.JsonNode;
 
 @Service

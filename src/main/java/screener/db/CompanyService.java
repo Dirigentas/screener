@@ -1,7 +1,8 @@
 package screener.db;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import screener.dto.Company;
 
 @Service
 public class CompanyService {
@@ -9,7 +10,6 @@ public class CompanyService {
     private final CompanyRepository companyRepository;
 
     // Dependency Injection (Spring's preferred way to get the repository)
-    @Autowired
     public CompanyService(CompanyRepository companyRepository) {
         this.companyRepository = companyRepository;
     }

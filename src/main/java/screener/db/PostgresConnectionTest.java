@@ -9,7 +9,7 @@ public class PostgresConnectionTest {
     // 1. UPDATE THESE CREDENTIALS
     private static final String DB_URL = "jdbc:postgresql://localhost:5432/postgres";
     private static final String USER = "postgres";
-    private static final String PASSWORD = "postgres";
+    private static final String PASSWORD = "admin";
 
     public static void main(String[] args) {
         System.out.println("Testing PostgreSQL connection...");

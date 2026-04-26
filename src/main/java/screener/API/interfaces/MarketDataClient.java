@@ -1,6 +1,6 @@
 package screener.API.interfaces;
 
-import screener.db.Company;
+import screener.dto.Company;
 import tools.jackson.databind.JsonNode;
 
 public interface MarketDataClient {

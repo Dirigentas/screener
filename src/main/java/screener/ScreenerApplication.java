@@ -10,35 +10,48 @@ import org.springframework.context.ConfigurableApplicationContext;
 import screener.API.AlphavantageMarketDataClient;
 import screener.API.FinnhubMarketDataClient;
 import screener.API.interfaces.MarketDataClient;
-import screener.db.Company;
 import screener.db.CompanyService;
+import screener.dto.Company;
 import screener.utils.FileReader;
 import screener.utils.JsonFileReader;
 import screener.utils.JsonFileWriter;
-
 import tools.jackson.databind.JsonNode;
 
 @SpringBootApplication
 public class ScreenerApplication {
 
-    private static LocalDate date = LocalDate.now();
+    private static LocalDate dateNow = LocalDate.now();
 
     public static void main(String[] args) {
         // get all API endpoints data for all tickers from tickers.txt to rawData----------------
         // getAPIEndpointsData();
         //---------------------------------------------------------------------------------------
-        // read data from json
-        String ticker = "UPWK";
-        double ev = readJsonData(ticker);
-        //---------------------------------------------------------------------------------------
-        // add company data to database
-        Company company = new Company();
-        company.setTicker(ticker);
-        // company.setName("Netflix");
-        company.setEnterpriseValue(ev);
-        // addDataToDB(args, company);
+        
         //---------------------------------------------------------------------------------------
         
+        String jsonDate = "2026-04-26";
+        ArrayList<String> tickers = FileReader.read("./rawData/tickers.txt");
+
+        // Start Spring context once and reuse the CompanyService for all inserts
+        ConfigurableApplicationContext context = SpringApplication.run(ScreenerApplication.class, args);
+        CompanyService companyService = context.getBean(CompanyService.class);
+
+        for (String ticker : tickers) {
+
+            // read data from json
+            String name = readJsonName(ticker, jsonDate);
+            double ev = readJsonEV(ticker, jsonDate);
+
+            // add company data to database
+            Company company = new Company();
+            company.setTicker(ticker);
+            company.setName(name);
+            company.setEnterpriseValue(ev);
+            Company addedToDBCompany = companyService.createNewCompany(company);
+            System.out.println("Successfully added company with ID: " + addedToDBCompany.getTicker());
+        }
+        
+        //---------------------------------------------------------------------------------------
     }
 
     @SuppressWarnings("unused")
@@ -60,7 +73,7 @@ public class ScreenerApplication {
         for (String ticker : tickers) {
             for (String endpoint : endpoints) {
                 
-                pathForDataFiles = "./rawData/" + ticker + "/" + endpoint + "_" + date + ".json";
+                pathForDataFiles = "./rawData/" + ticker + "/" + endpoint + "_" + dateNow + ".json";
 
                 if (endpoint.contains("finnhub")) {
                     dataProvider = finnhubMarketDataClient;
@@ -75,21 +88,20 @@ public class ScreenerApplication {
         }
     }
 
-    @SuppressWarnings("unused")
-    private static void addDataToDB(String[] args, Company company) {
+    private static String readJsonName(String ticker, String jsonDate) {
 
-        // 1. Start the Spring application context
-        ConfigurableApplicationContext context = SpringApplication.run(ScreenerApplication.class, args);
-        // 2. Get the CompanyService bean from the context
-        CompanyService companyService = context.getBean(CompanyService.class);
-        // 3. Now you can use the service
-        Company addedToDBCompany = companyService.createNewCompany(company);
-        System.out.println("Successfully added company with ID: " + addedToDBCompany.getTicker());
+        String path = "rawData/" + ticker + "/alphavantage.OVERVIEW_" + jsonDate + ".json";
+        JsonNode json = JsonFileReader.read(path);
+
+        String metric = json
+                .get("Name")
+                .asString();
+
+        return metric;
     }
-    
-    private static double readJsonData(String ticker) {
+    private static double readJsonEV(String ticker, String jsonDate) {
 
-        String path = "rawData/" + ticker + "/finnhub.all_2025-11-15.json";
+        String path = "rawData/" + ticker + "/finnhub.all_" + jsonDate + ".json";
         JsonNode json = JsonFileReader.read(path);
 
         double metric = json
