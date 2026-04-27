@@ -4,4 +4,4 @@
 
 
 ## Bugs
-* Alpha Vantage API provider response was to call the API not more than once per second
+* ~~Alpha Vantage API provider response was to call the API not more than once per second~~
