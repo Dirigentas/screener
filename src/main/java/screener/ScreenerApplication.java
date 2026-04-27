@@ -73,10 +73,10 @@ public class ScreenerApplication {
         
         ArrayList<String> endpoints = new ArrayList<>();
         endpoints.add("finnhub.all");
-        // endpoints.add("alphavantage.OVERVIEW");
-        // endpoints.add("alphavantage.INCOME_STATEMENT");
-        // endpoints.add("alphavantage.BALANCE_SHEET");
-        // endpoints.add("alphavantage.CASH_FLOW");
+        endpoints.add("alphavantage.OVERVIEW");
+        endpoints.add("alphavantage.INCOME_STATEMENT");
+        endpoints.add("alphavantage.BALANCE_SHEET");
+        endpoints.add("alphavantage.CASH_FLOW");
 
         for (String ticker : tickers) {
             for (String endpoint : endpoints) {
@@ -92,6 +92,7 @@ public class ScreenerApplication {
                     jsonData = dataProvider.getCompanyJson(ticker, endpoint.split("\\.")[1]);
                     JsonFileWriter.write(pathForDataFiles, jsonData);
                 }
+                TimeUnit.SECONDS.sleep(2);
             }
         }
     }
