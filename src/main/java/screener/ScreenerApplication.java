@@ -1,7 +1,9 @@
 package screener;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -22,14 +24,15 @@ public class ScreenerApplication {
 
     private static LocalDate dateNow = LocalDate.now();
 
-    public static void main(String[] args) {
-        // get all API endpoints data for all tickers from tickers.txt to rawData----------------
+    public static void main(String[] args) throws InterruptedException {
+        //---------------------------------------------------------------------------------------
+        // get all API endpoints data for all tickers from tickers.txt to rawData
         // getAPIEndpointsData();
         //---------------------------------------------------------------------------------------
         
         //---------------------------------------------------------------------------------------
         
-        String jsonDate = "2026-04-26";
+        String jsonDate = "2026-04-27";
         ArrayList<String> tickers = FileReader.read("./rawData/tickers.txt");
 
         // Start Spring context once and reuse the CompanyService for all inserts
@@ -39,14 +42,20 @@ public class ScreenerApplication {
         for (String ticker : tickers) {
 
             // read data from json
-            String name = readJsonName(ticker, jsonDate);
-            double ev = readJsonEV(ticker, jsonDate);
+            String name = getCompanyName(ticker, jsonDate);
+            double ev = getCompanyEV(ticker, jsonDate);
+            double ebitFinn = getFinnhubEBIT(ticker, jsonDate);
+            double ebitAlph = getAlphavantageEBIT(ticker, jsonDate);
 
             // add company data to database
             Company company = new Company();
             company.setTicker(ticker);
             company.setName(name);
             company.setEnterpriseValue(ev);
+            company.setEbitFinn(ebitFinn);
+            company.setEbitAlph(ebitAlph);
+            company.setEarningsYield((double) Math.round(ebitAlph / ev * 100 * 100) / 100);
+
             Company addedToDBCompany = companyService.createNewCompany(company);
             System.out.println("Successfully added company with ID: " + addedToDBCompany.getTicker());
         }
@@ -54,8 +63,7 @@ public class ScreenerApplication {
         //---------------------------------------------------------------------------------------
     }
 
-    @SuppressWarnings("unused")
-    private static void getAPIEndpointsData() {
+    private static void getAPIEndpointsData() throws InterruptedException {
         String pathForDataFiles;
         MarketDataClient dataProvider = null;
         JsonNode jsonData = null;
@@ -65,10 +73,10 @@ public class ScreenerApplication {
         
         ArrayList<String> endpoints = new ArrayList<>();
         endpoints.add("finnhub.all");
-        endpoints.add("alphavantage.OVERVIEW");
-        endpoints.add("alphavantage.INCOME_STATEMENT");
-        endpoints.add("alphavantage.BALANCE_SHEET");
-        endpoints.add("alphavantage.CASH_FLOW");
+        // endpoints.add("alphavantage.OVERVIEW");
+        // endpoints.add("alphavantage.INCOME_STATEMENT");
+        // endpoints.add("alphavantage.BALANCE_SHEET");
+        // endpoints.add("alphavantage.CASH_FLOW");
 
         for (String ticker : tickers) {
             for (String endpoint : endpoints) {
@@ -88,7 +96,7 @@ public class ScreenerApplication {
         }
     }
 
-    private static String readJsonName(String ticker, String jsonDate) {
+    private static String getCompanyName(String ticker, String jsonDate) {
 
         String path = "rawData/" + ticker + "/alphavantage.OVERVIEW_" + jsonDate + ".json";
         JsonNode json = JsonFileReader.read(path);
@@ -99,7 +107,7 @@ public class ScreenerApplication {
 
         return metric;
     }
-    private static double readJsonEV(String ticker, String jsonDate) {
+    private static double getCompanyEV(String ticker, String jsonDate) {
 
         String path = "rawData/" + ticker + "/finnhub.all_" + jsonDate + ".json";
         JsonNode json = JsonFileReader.read(path);
@@ -110,5 +118,34 @@ public class ScreenerApplication {
                 .asDouble();
 
         return metric;
+    }
+    private static double getFinnhubEBIT(String ticker, String jsonDate) {
+
+        String path = "rawData/" + ticker + "/finnhub.all_" + jsonDate + ".json";
+        JsonNode json = JsonFileReader.read(path);
+
+        double metric = json
+                .get("series")
+                .get("annual")
+                .get("ebitPerShare")
+                .get(0)
+                .get("v")
+                .asDouble();
+
+        return metric;
+    }
+
+    private static double getAlphavantageEBIT(String ticker, String jsonDate) {
+
+        String path = "rawData/" + ticker + "/alphavantage.INCOME_STATEMENT_" + jsonDate + ".json";
+        JsonNode json = JsonFileReader.read(path);
+
+        double metric = json
+                .get("annualReports")
+                .get(0)
+                .get("ebit")
+                .asDouble();
+
+        return metric / 1000000;
     }
 }

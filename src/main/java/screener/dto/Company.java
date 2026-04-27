@@ -10,7 +10,10 @@ public class Company {
     
     @Id // Marks this as the primary key
     
-    private String ticker; //varying(10)
-    private String name; //varying(50)
-    private Double enterpriseValue; // ev stands for Enterprise Value (double)
+    private String ticker;
+    private String name;
+    private Double enterpriseValue; // ev stands for Enterprise Value
+    private Double ebitFinn; // earning bebore interest & taxes
+    private Double ebitAlph; // earning bebore interest & taxes
+    private Double earningsYield; // Earnings Yield = EBIT / Enterprise Value
 }

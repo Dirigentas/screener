@@ -1,3 +1,7 @@
 ## Roudmap
 * pasirašyti metodus pagrindiniams finansiniams rodikliams
-* įtraukti juos per forEach
+
+
+
+## Bugs
+* Alpha Vantage API provider response was to call the API not more than once per second
