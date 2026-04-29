@@ -23,6 +23,7 @@ import tools.jackson.databind.JsonNode;
 public class ScreenerApplication {
 
     private static LocalDate dateNow = LocalDate.now();
+    private static final int MILLION  = 1_000_000;
 
     public static void main(String[] args) throws InterruptedException {
         //---------------------------------------------------------------------------------------
@@ -51,10 +52,13 @@ public class ScreenerApplication {
             Company company = new Company();
             company.setTicker(ticker);
             company.setName(name);
-            company.setEnterpriseValue(ev);
-            company.setEbitFinn(ebitFinn);
-            company.setEbitAlph(ebitAlph);
-            company.setEarningsYield((double) Math.round(ebitAlph / ev * 100 * 100) / 100);
+            // Earnings Yield
+            company.setEarningsYieldAlph((double) Math.round(ebitAlph / ev * 100 * 10) / 10);
+            company.setEarningsYieldFinn((double) Math.round(ebitFinn / ev * 100 * 10) / 10);
+
+            // Return on Capital
+            // Net Working Capital = totalCurrentAssets - cashAndCashEquivalentsAtCarryingValue - totalCurrentLiabilities - shortTermDebt
+            // Net Fixed Assets = totalNonCurrentAssets - intangibleAssets - goodwill
 
             Company addedToDBCompany = companyService.createNewCompany(company);
             System.out.println("Successfully added company with ID: " + addedToDBCompany.getTicker());
@@ -118,35 +122,48 @@ public class ScreenerApplication {
                 .get("enterpriseValue")
                 .asDouble();
 
-        return metric;
+        return (double) Math.round(metric);
     }
     private static double getFinnhubEBIT(String ticker, String jsonDate) {
 
-        String path = "rawData/" + ticker + "/finnhub.all_" + jsonDate + ".json";
-        JsonNode json = JsonFileReader.read(path);
+        String path1 = "rawData/" + ticker + "/finnhub.all_" + jsonDate + ".json";
+        JsonNode json1 = JsonFileReader.read(path1);
 
-        double metric = json
+        double ebitPerShare = 0;
+
+        for (int i = 0; i < 4; i++) {
+            ebitPerShare += json1
                 .get("series")
-                .get("annual")
+                .get("quarterly")
                 .get("ebitPerShare")
-                .get(0)
+                .get(i)
                 .get("v")
                 .asDouble();
+        }
 
-        return metric;
+        String path2 = "rawData/" + ticker + "/alphavantage.OVERVIEW_" + jsonDate + ".json";
+        JsonNode json2 = JsonFileReader.read(path2);
+
+        double sharesOutstanding = json2
+                .get("SharesOutstanding")
+                .asDouble();
+
+        return (double) Math.round(ebitPerShare * sharesOutstanding / MILLION);
     }
 
     private static double getAlphavantageEBIT(String ticker, String jsonDate) {
 
         String path = "rawData/" + ticker + "/alphavantage.INCOME_STATEMENT_" + jsonDate + ".json";
         JsonNode json = JsonFileReader.read(path);
-
-        double metric = json
-                .get("annualReports")
-                .get(0)
+        double metric = 0;
+        
+        for (int i = 0; i < 4; i++) {
+            metric += json
+                .get("quarterlyReports")
+                .get(i)
                 .get("ebit")
                 .asDouble();
-
-        return metric / 1000000;
+        }
+        return (double) Math.round(metric / MILLION);
     }
 }
