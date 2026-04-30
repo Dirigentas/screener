@@ -1,6 +1,6 @@
 ## Roudmap
 * develop methods for key financial indicators:
-  * date of data used for calculations
+  * date of data used for calculations (i think it should be the last quater data date)
   * all magic formula indicators
   * all phil town methodology
   * all 'Revolution Investing' metrics
