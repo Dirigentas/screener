@@ -1,9 +1,9 @@
-package screener.API;
+package screener.api;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import screener.API.interfaces.MarketDataClient;
+import screener.api.interfaces.MarketDataClient;
 import screener.dto.Company;
 import tools.jackson.databind.JsonNode;
 

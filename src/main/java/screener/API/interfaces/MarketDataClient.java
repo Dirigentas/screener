@@ -1,4 +1,4 @@
-package screener.API.interfaces;
+package screener.api.interfaces;
 
 import screener.dto.Company;
 import tools.jackson.databind.JsonNode;
