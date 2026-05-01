@@ -1,7 +1,7 @@
 ## Roudmap
 * develop methods for key financial indicators:
+  * all magic formula indicators (compare yearly and quaterly balance sheets, possibly change from yearly to quaterly data)
   * date of data used for calculations (i think it should be the last quater data date)
-  * all magic formula indicators
   * all phil town methodology
   * all 'Revolution Investing' metrics
   * separate table for risk metrics from google sheets

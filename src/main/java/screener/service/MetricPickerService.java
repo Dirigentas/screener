@@ -1,5 +1,8 @@
 package screener.service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import screener.utils.JsonFileReader;
 import tools.jackson.databind.JsonNode;
 
@@ -73,5 +76,59 @@ public class MetricPickerService {
                 .asDouble();
         }
         return (double) Math.round(metric / MILLION);
+    }
+
+    public static double getWorkingCapital(String ticker, String JSON_DATE) {
+        // Net Working Capital = totalCurrentAssets - cashAndCashEquivalentsAtCarryingValue - totalCurrentLiabilities - shortTermDebt
+
+        String path = String.format("rawData/%s/alphavantage.BALANCE_SHEET_%s.json", ticker, JSON_DATE);
+        JsonNode json = JsonFileReader.read(path);
+        Map<String, Double> metrics = new HashMap<>();
+
+        metrics.put("totalCurrentAssets", null);
+        metrics.put("cashAndCashEquivalentsAtCarryingValue", null);
+        metrics.put("totalCurrentLiabilities", null);
+        metrics.put("shortTermDebt", null);
+        
+        for (String metric : metrics.keySet()) {
+            System.out.println("For test start: " + metric);
+            double value = json
+                .get("annualReports")
+                .get(0)
+                .get(metric)
+                .asLong();
+            metrics.putIfAbsent(metric, value);
+        }
+        return Math.round((metrics.get("totalCurrentAssets")
+                - metrics.get("cashAndCashEquivalentsAtCarryingValue")
+                - metrics.get("totalCurrentLiabilities")
+                - metrics.get("shortTermDebt"))
+                / MILLION);
+    }
+
+    public static double getFixedAssets(String ticker, String JSON_DATE) {
+        // Net Fixed Assets = totalNonCurrentAssets - intangibleAssets - goodwill
+
+        String path = String.format("rawData/%s/alphavantage.BALANCE_SHEET_%s.json", ticker, JSON_DATE);
+        JsonNode json = JsonFileReader.read(path);
+        Map<String, Double> metrics = new HashMap<>();
+
+        metrics.put("totalNonCurrentAssets", null);
+        metrics.put("intangibleAssets", null);
+        metrics.put("goodwill", null);
+        
+        for (String metric : metrics.keySet()) {
+            System.out.println("For test start: " + metric);
+            double value = json
+                .get("annualReports")
+                .get(0)
+                .get(metric)
+                .asLong();
+            metrics.putIfAbsent(metric, value);
+        }
+        return Math.round((metrics.get("totalNonCurrentAssets")
+                - metrics.get("intangibleAssets")
+                - metrics.get("goodwill"))
+                / MILLION);
     }
 }

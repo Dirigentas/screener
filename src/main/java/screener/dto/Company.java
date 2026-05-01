@@ -20,6 +20,12 @@ public class Company {
     @Column(name = "earnings_yield_finn_%", comment = "Measures how much earnings a company generates compared to its price")
     private Double earningsYieldFinn; // Earnings Yield = EBIT / Enterprise Value
     
-    // @Column(comment = "Shows how efficiently a company uses its capital")
-    // private Double returnOnCapital; // Return on Capital = EBIT / (Net Working Capital + Net Fixed Assets)
+    @Column(comment = "Amount of money a company has tied up in its daily operations")
+    private Double workingCapital; // Net Working Capital = totalCurrentAssets - cashAndCashEquivalentsAtCarryingValue - totalCurrentLiabilities - shortTermDebt
+    
+    @Column(comment = "Value of a company’s long-term physical resources")
+    private Double fixedAssets; // Net Fixed Assets = totalNonCurrentAssets - intangibleAssets - goodwill
+    
+    @Column(name = "return_On_Capital_%", comment = "Shows how efficiently a company uses its capital")
+    private Double returnOnCapital; // Return on Capital = EBIT / (Net Working Capital + Net Fixed Assets)
 }
