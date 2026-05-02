@@ -3,6 +3,7 @@
 * date of fetched data used for calculations
 * date of last quater earnings used for calculations
 * delete date from file names
+* make that "read data from json" would be for all tickers that have files, not the ones i mention
 
 * develop methods for key financial indicators:
   * all phil town methodology
