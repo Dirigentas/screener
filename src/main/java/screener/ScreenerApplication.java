@@ -35,21 +35,25 @@ public class ScreenerApplication {
             // read data from json
             String name = MetricPickerService.getCompanyName(ticker, JSON_DATE);
             double ev = MetricPickerService.getCompanyEV(ticker, JSON_DATE);
+            // EBIT
             double ebitAlph = MetricPickerService.getAlphavantageEBIT(ticker, JSON_DATE);
             double ebitFinn = MetricPickerService.getFinnhubEBIT(ticker, JSON_DATE);
+            double averageEbit = (double) Math.round((ebitAlph + ebitFinn) / 2 * 10) / 10;
+
             double workingCapital = MetricPickerService.getWorkingCapital(ticker, JSON_DATE);
             double fixedAssets = MetricPickerService.getFixedAssets(ticker, JSON_DATE);
 
             // add company data to database
             Company company = new Company();
             company.setTicker(ticker);
-            company.setName(name);
+            company.setAname(name);
                 // Earnings Yield
-            company.setEarningsYieldAlph((double) Math.round(ebitAlph / ev * 100 * 10) / 10);
-            company.setEarningsYieldFinn((double) Math.round(ebitFinn / ev * 100 * 10) / 10);
+            // company.setEv(ev);
+            company.setEarningsYield((double) Math.round(averageEbit / ev * 100 * 10) / 10);
+            // company.setEbit(averageEbit);
                 // Return on Capital
-            company.setWorkingCapital(workingCapital);
-            company.setFixedAssets(fixedAssets);
+            // company.setWorkingCapital(workingCapital);
+            // company.setFixedAssets(fixedAssets);
             company.setReturnOnCapital((double) Math.round(ebitAlph / (workingCapital + fixedAssets)* 100 * 10) / 10);
             
 

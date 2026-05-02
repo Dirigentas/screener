@@ -91,9 +91,8 @@ public class MetricPickerService {
         metrics.put("shortTermDebt", null);
         
         for (String metric : metrics.keySet()) {
-            System.out.println("For test start: " + metric);
             double value = json
-                .get("annualReports")
+                .get("quarterlyReports")
                 .get(0)
                 .get(metric)
                 .asLong();
@@ -102,7 +101,7 @@ public class MetricPickerService {
         return Math.round((metrics.get("totalCurrentAssets")
                 - metrics.get("cashAndCashEquivalentsAtCarryingValue")
                 - metrics.get("totalCurrentLiabilities")
-                - metrics.get("shortTermDebt"))
+                + metrics.get("shortTermDebt"))
                 / MILLION);
     }
 
@@ -118,9 +117,8 @@ public class MetricPickerService {
         metrics.put("goodwill", null);
         
         for (String metric : metrics.keySet()) {
-            System.out.println("For test start: " + metric);
             double value = json
-                .get("annualReports")
+                .get("quarterlyReports")
                 .get(0)
                 .get(metric)
                 .asLong();
