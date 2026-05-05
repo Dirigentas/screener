@@ -15,6 +15,9 @@ public class Company {
     @Column(name = "name")
     private String aname;
 
+    @Column(name = "latest quarter date")
+    private String latestQuarter;
+
     // private Double ev;
 
     @Column(name = "earnings yield %", comment = "Measures how much earnings a company generates compared to its price")

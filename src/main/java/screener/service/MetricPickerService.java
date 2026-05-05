@@ -9,10 +9,14 @@ import tools.jackson.databind.JsonNode;
 public class MetricPickerService {
 
     private static final int MILLION  = 1_000_000;
+    private static final String ALPHA_OVERVIEW  = "rawData/%s/alphavantage.OVERVIEW.json";
+    private static final String ALPHA_INCOME  = "rawData/%s/alphavantage.INCOME_STATEMENT.json";
+    private static final String ALPHA_BALANCE  = "rawData/%s/alphavantage.BALANCE_SHEET.json";
+    private static final String FINN_ALL  = "rawData/%s/finnhub.all.json";
     
-    public static String getCompanyName(String ticker, String JSON_DATE) {
+    public static String getCompanyName(String ticker) {
 
-        String path = String.format("rawData/%s/alphavantage.OVERVIEW_%s.json", ticker, JSON_DATE);
+        String path = String.format(ALPHA_OVERVIEW, ticker);
         JsonNode json = JsonFileReader.read(path);
 
         String metric = json
@@ -22,9 +26,21 @@ public class MetricPickerService {
         return metric;
     }
 
-    public static double getCompanyEV(String ticker, String JSON_DATE) {
+    public static String getLatestQuarter(String ticker) {
 
-        String path = String.format("rawData/%s/finnhub.all_%s.json", ticker, JSON_DATE);
+        String path = String.format(ALPHA_OVERVIEW, ticker);
+        JsonNode json = JsonFileReader.read(path);
+
+        String metric = json
+                .get("LatestQuarter")
+                .asString();
+
+        return metric;
+    }
+
+    public static double getCompanyEV(String ticker) {
+
+        String path = String.format(FINN_ALL, ticker);
         JsonNode json = JsonFileReader.read(path);
 
         double metric = json
@@ -35,9 +51,9 @@ public class MetricPickerService {
         return (double) Math.round(metric);
     }
     
-    public static double getFinnhubEBIT(String ticker, String JSON_DATE) {
+    public static double getFinnhubEBIT(String ticker) {
 
-        String path1 = String.format("rawData/%s/finnhub.all_%s.json", ticker, JSON_DATE);
+        String path1 = String.format(FINN_ALL, ticker);
         JsonNode json1 = JsonFileReader.read(path1);
 
         double ebitPerShare = 0;
@@ -52,7 +68,7 @@ public class MetricPickerService {
                 .asDouble();
         }
 
-        String path2 = String.format("rawData/%s/alphavantage.OVERVIEW_%s.json", ticker, JSON_DATE);
+        String path2 = String.format(ALPHA_OVERVIEW, ticker);
         JsonNode json2 = JsonFileReader.read(path2);
 
         double sharesOutstanding = json2
@@ -62,9 +78,9 @@ public class MetricPickerService {
         return (double) Math.round(ebitPerShare * sharesOutstanding / MILLION);
     }
 
-    public static double getAlphavantageEBIT(String ticker, String JSON_DATE) {
+    public static double getAlphavantageEBIT(String ticker) {
 
-        String path = String.format("rawData/%s/alphavantage.INCOME_STATEMENT_%s.json", ticker, JSON_DATE);
+        String path = String.format(ALPHA_INCOME, ticker);
         JsonNode json = JsonFileReader.read(path);
         double metric = 0;
         
@@ -78,10 +94,10 @@ public class MetricPickerService {
         return (double) Math.round(metric / MILLION);
     }
 
-    public static double getWorkingCapital(String ticker, String JSON_DATE) {
+    public static double getWorkingCapital(String ticker) {
         // Net Working Capital = totalCurrentAssets - cashAndCashEquivalentsAtCarryingValue - totalCurrentLiabilities - shortTermDebt
 
-        String path = String.format("rawData/%s/alphavantage.BALANCE_SHEET_%s.json", ticker, JSON_DATE);
+        String path = String.format(ALPHA_BALANCE, ticker);
         JsonNode json = JsonFileReader.read(path);
         Map<String, Double> metrics = new HashMap<>();
 
@@ -105,10 +121,10 @@ public class MetricPickerService {
                 / MILLION);
     }
 
-    public static double getFixedAssets(String ticker, String JSON_DATE) {
+    public static double getFixedAssets(String ticker) {
         // Net Fixed Assets = totalNonCurrentAssets - intangibleAssets - goodwill
 
-        String path = String.format("rawData/%s/alphavantage.BALANCE_SHEET_%s.json", ticker, JSON_DATE);
+        String path = String.format(ALPHA_BALANCE, ticker);
         JsonNode json = JsonFileReader.read(path);
         Map<String, Double> metrics = new HashMap<>();
 
