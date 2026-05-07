@@ -1,6 +1,8 @@
 package screener;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,6 +18,9 @@ import screener.utils.FileReader;
 public class ScreenerApplication {
 
     private static final ArrayList<String> TICKERS = FileReader.read("./rawData/tickers.txt");
+    private static final ArrayList<String> ALL_TICKERS = new ArrayList<>(
+        Arrays.asList(new File("./rawData/").list((dir, name) -> new File(dir, name).isDirectory()))
+    );
     
     public static void main(String[] args) throws InterruptedException {
         //----------------------------//
@@ -35,9 +40,9 @@ public class ScreenerApplication {
         //---------------------------------------------------------------------------------------
 
         //---------------------------------------------------------------------------------------
-        // get data from API endpoints  for tickers.txt (mainly for newest EV values)
+        // get data from API endpoints  for all ticker folders in a rawDara folder (mainly for newest EV values)
         if (runFinnhubApi == 1) {
-            MarketDataRetievalService.getFinnhubApiData(TICKERS);
+            MarketDataRetievalService.getFinnhubApiData(ALL_TICKERS);
         }
         //---------------------------------------------------------------------------------------
         
@@ -47,7 +52,7 @@ public class ScreenerApplication {
             ConfigurableApplicationContext context = SpringApplication.run(ScreenerApplication.class, args);
             CompanyService companyService = context.getBean(CompanyService.class);
 
-            for (String ticker : TICKERS) {
+            for (String ticker : ALL_TICKERS) {
 
                 // read data from json
                 String name = MetricPickerService.getCompanyName(ticker);
@@ -73,7 +78,7 @@ public class ScreenerApplication {
                     // Return on Capital
                 // company.setWorkingCapital(workingCapital);
                 // company.setFixedAssets(fixedAssets);
-                company.setReturnOnCapital((double) Math.round(ebitAlph / (workingCapital + fixedAssets)* 100 * 10) / 10);
+                company.setReturnOnCapital((double) Math.round(averageEbit / (workingCapital + fixedAssets)* 100 * 10) / 10);
                 
 
                 Company addedToDBCompany = companyService.createNewCompany(company);

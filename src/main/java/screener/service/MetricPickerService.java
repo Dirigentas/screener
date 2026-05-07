@@ -107,11 +107,13 @@ public class MetricPickerService {
         metrics.put("shortTermDebt", null);
         
         for (String metric : metrics.keySet()) {
-            double value = json
+            JsonNode node = json
                 .get("quarterlyReports")
                 .get(0)
-                .get(metric)
-                .asLong();
+                .get(metric);
+
+            double value = (node.isNull() || node.asString().equals("None")) ? 0 : node.asDouble();
+
             metrics.putIfAbsent(metric, value);
         }
         return Math.round((metrics.get("totalCurrentAssets")
@@ -133,11 +135,13 @@ public class MetricPickerService {
         metrics.put("goodwill", null);
         
         for (String metric : metrics.keySet()) {
-            double value = json
+            JsonNode node = json
                 .get("quarterlyReports")
                 .get(0)
-                .get(metric)
-                .asLong();
+                .get(metric);
+
+            double value = (node.isNull() || node.asString().equals("None")) ? 0 : node.asDouble();
+
             metrics.putIfAbsent(metric, value);
         }
         return Math.round((metrics.get("totalNonCurrentAssets")

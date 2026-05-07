@@ -1,7 +1,6 @@
 ## Roudmap
 
-* make safe from no data for all metrics(example: AMZN "shortTermDebt" : "None")
-* make that "read data from json" would be for all tickers that have files, not the ones I mention in a file
+* give a rating for magic formula companies
 
 * develop methods for key financial indicators:
   * all phil town methodology
@@ -15,8 +14,10 @@
 
 ## Implemented
 
-* ~~Alpha Vantage API provider response was to call the API not more than once per second~~
-* ~~date of last quater earnings used for calculations~~
-* ~~delete date from file names~~
-* ~~all magic formula indicators~~
-* ~~make separate method for calling only finnhub for newest EV values~~
+* Alpha Vantage API provider response was to call the API not more than once per second
+* date of last quater earnings used for calculations
+* delete date from file names
+* all magic formula indicators
+* make separate method for calling only finnhub for newest EV values
+* make safe from no data for all metrics(example: "shortTermDebt" : "None")
+* make that "read data from json" and finhub api would be for all tickers that have files, not just the ones I mention in a file
