@@ -1,8 +1,9 @@
-package screener.db;
+package screener.service;
 
 import org.springframework.stereotype.Service;
 
-import screener.dto.Company;
+import screener.entity.Company;
+import screener.repository.CompanyRepository;
 
 @Service
 public class CompanyService {

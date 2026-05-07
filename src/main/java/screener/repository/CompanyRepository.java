@@ -1,8 +1,8 @@
-package screener.db;
+package screener.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import screener.dto.Company;
+import screener.entity.Company;
 
 /* Spring Data JPA
  * Lowest boilerplate code level

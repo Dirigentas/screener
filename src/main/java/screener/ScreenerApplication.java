@@ -8,25 +8,25 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
-import screener.db.CompanyService;
-import screener.dto.Company;
+import screener.entity.Company;
+import screener.service.CompanyService;
 import screener.service.MarketDataRetievalService;
 import screener.service.MetricPickerService;
-import screener.utils.FileReader;
+import screener.utils.TxtFileReader;
 
 @SpringBootApplication
 public class ScreenerApplication {
 
-    private static final ArrayList<String> TICKERS = FileReader.read("./rawData/tickers.txt");
+    private static final ArrayList<String> TICKERS = TxtFileReader.read("./rawData/tickers.txt");
     private static final ArrayList<String> ALL_TICKERS = new ArrayList<>(
         Arrays.asList(new File("./rawData/").list((dir, name) -> new File(dir, name).isDirectory()))
     );
     
     public static void main(String[] args) throws InterruptedException {
         //----------------------------//
-        // Control panel             //
+        // Controller                //
         int runAlphavantageApi = 0; // Change to '0' to skip API fetch
-        int runFinnhubApi = 1;     // Change to '0' to skip API fetch
+        int runFinnhubApi = 0;     // Change to '0' to skip API fetch
         int runDb = 1;            // Change to '0' to skip DB patch
         //-----------------------//
 
@@ -80,6 +80,8 @@ public class ScreenerApplication {
                 // company.setFixedAssets(fixedAssets);
                 company.setReturnOnCapital((double) Math.round(averageEbit / (workingCapital + fixedAssets)* 100 * 10) / 10);
                 
+
+                // companyRepository.save(company);
 
                 Company addedToDBCompany = companyService.createNewCompany(company);
                 System.out.println("Successfully added company with ID: " + addedToDBCompany.getTicker());

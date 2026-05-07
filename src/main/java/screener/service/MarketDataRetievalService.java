@@ -5,9 +5,9 @@ import java.util.concurrent.TimeUnit;
 
 import org.springframework.stereotype.Service;
 
-import screener.api.AlphavantageMarketDataClient;
-import screener.api.FinnhubMarketDataClient;
-import screener.api.interfaces.MarketDataClient;
+import screener.client.MarketDataClient;
+import screener.client.impl.AlphavantageMarketDataClient;
+import screener.client.impl.FinnhubMarketDataClient;
 import screener.utils.JsonFileWriter;
 import tools.jackson.databind.JsonNode;
 

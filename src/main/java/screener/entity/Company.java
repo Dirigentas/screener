@@ -1,4 +1,4 @@
-package screener.dto;
+package screener.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
