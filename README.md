@@ -1,5 +1,6 @@
 ## Roudmap
 
+* make sepate table for intermediate calculations (for debugging odd final metrics)
 * give a rating for magic formula companies
 
 * develop methods for key financial indicators:
