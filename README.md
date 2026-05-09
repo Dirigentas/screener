@@ -1,6 +1,6 @@
 ## Roudmap
 
-* give a rating for magic formula companies
+* check "working-capital" formula and numbers
 
 * develop methods for key financial indicators:
   - all phil town methodology
@@ -22,6 +22,7 @@
 * make safe from no data for all metrics(example: "shortTermDebt" : "None")
 * make that "read data from json" and finhub api would be for all tickers that have files
 * make separate table for intermediate calculations (for debugging odd final metrics)
+* give a rating for magic formula companies
 
 
 
