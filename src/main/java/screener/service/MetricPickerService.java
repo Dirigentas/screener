@@ -28,11 +28,13 @@ public class MetricPickerService {
 
     public static String getLatestQuarter(String ticker) {
 
-        String path = String.format(ALPHA_OVERVIEW, ticker);
+        String path = String.format(ALPHA_BALANCE, ticker);
         JsonNode json = JsonFileReader.read(path);
 
         String metric = json
-                .get("LatestQuarter")
+                .get("quarterlyReports")
+                .get(0)
+                .get("fiscalDateEnding")
                 .asString();
 
         return metric;

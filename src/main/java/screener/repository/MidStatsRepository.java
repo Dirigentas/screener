@@ -2,7 +2,7 @@ package screener.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import screener.entity.Company;
+import screener.entity.MidStats;
 
 /* Spring Data JPA
  * Lowest boilerplate code level
@@ -11,7 +11,7 @@ import screener.entity.Company;
  */
 
 // JpaRepository<Entity_Class, Primary_Key_Type>
-public interface CompanyRepository extends JpaRepository<Company, String> {
+public interface MidStatsRepository extends JpaRepository<MidStats, String> {
 
     // You can also define custom queries by just naming the method!
     // Spring will automatically create the query: SELECT * FROM companies WHERE name = ?

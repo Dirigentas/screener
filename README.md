@@ -1,6 +1,5 @@
 ## Roudmap
 
-* make sepate table for intermediate calculations (for debugging odd final metrics)
 * give a rating for magic formula companies
 
 * develop methods for key financial indicators:
@@ -21,7 +20,8 @@
 * all magic formula indicators
 * make separate method for calling only finnhub for newest EV values
 * make safe from no data for all metrics(example: "shortTermDebt" : "None")
-* make that "read data from json" and finhub api would be for all tickers that have files, not just the ones I mention in a file
+* make that "read data from json" and finhub api would be for all tickers that have files
+* make separate table for intermediate calculations (for debugging odd final metrics)
 
 
 

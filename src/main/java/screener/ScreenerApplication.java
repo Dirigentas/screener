@@ -8,8 +8,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
-import screener.entity.Company;
-import screener.service.CompanyService;
+import screener.entity.MagicFormula;
+import screener.entity.MidStats;
+import screener.repository.MidStatsRepository;
+import screener.service.MagicFormulaService;
 import screener.service.MarketDataRetievalService;
 import screener.service.MetricPickerService;
 import screener.utils.TxtFileReader;
@@ -50,7 +52,8 @@ public class ScreenerApplication {
         // Start Spring context once and reuse the CompanyService for all inserts
         if (runDb == 1) {
             ConfigurableApplicationContext context = SpringApplication.run(ScreenerApplication.class, args);
-            CompanyService companyService = context.getBean(CompanyService.class);
+            MagicFormulaService magicFormulaService = context.getBean(MagicFormulaService.class);
+            MidStatsRepository midStatsRepository = context.getBean(MidStatsRepository.class);
 
             for (String ticker : ALL_TICKERS) {
 
@@ -66,28 +69,32 @@ public class ScreenerApplication {
                 double workingCapital = MetricPickerService.getWorkingCapital(ticker);
                 double fixedAssets = MetricPickerService.getFixedAssets(ticker);
 
-                // add company data to database
-                Company company = new Company();
-                company.setTicker(ticker);
-                company.setAname(name);
-                company.setLatestQuarter(latestQuarter);
-                    // Earnings Yield
-                // company.setEv(ev);
-                company.setEarningsYield((double) Math.round(averageEbit / ev * 100 * 10) / 10);
-                // company.setEbit(averageEbit);
-                    // Return on Capital
-                // company.setWorkingCapital(workingCapital);
-                // company.setFixedAssets(fixedAssets);
-                company.setReturnOnCapital((double) Math.round(averageEbit / (workingCapital + fixedAssets)* 100 * 10) / 10);
-                
+                // mid-stats data to DB
+                MidStats midStats = new MidStats();
+                midStats.setTicker(ticker);
+                // Earnings Yield
+                midStats.setEv(ev);
+                midStats.setEbit(averageEbit);
+                // Return on Capital
+                midStats.setWorkingCapital(workingCapital);
+                midStats.setFixedAssets(fixedAssets);
 
-                // companyRepository.save(company);
+                // add company data to DB
+                MagicFormula magicFormula = new MagicFormula();
+                magicFormula.setTicker(ticker);
+                magicFormula.setAName(name);
+                magicFormula.setZLatestQuarter(latestQuarter);
+                magicFormula.setEarningsYield((double) Math.round(averageEbit / ev * 100 * 10) / 10);
+                magicFormula.setReturnOnCapital((double) Math.round(averageEbit / (workingCapital + fixedAssets)* 100 * 10) / 10);
 
-                Company addedToDBCompany = companyService.createNewCompany(company);
+                midStatsRepository.save(midStats);
+
+                MagicFormula addedToDBCompany = magicFormulaService.createNewCompany(magicFormula);
                 System.out.println("Successfully added company with ID: " + addedToDBCompany.getTicker());
             }
+            // Shut down the Spring container
+            context.close();
         }
-        
         //---------------------------------------------------------------------------------------
     }
 }
