@@ -1,7 +1,5 @@
 ## Roudmap
 
-* check "working-capital" formula and numbers
-
 * develop methods for key financial indicators:
   - all phil town methodology
   - all 'Revolution Investing' metrics

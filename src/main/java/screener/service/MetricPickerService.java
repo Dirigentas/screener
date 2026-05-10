@@ -87,11 +87,12 @@ public class MetricPickerService {
         double metric = 0;
         
         for (int i = 0; i < 4; i++) {
-            metric += json
+            JsonNode node = json
                 .get("quarterlyReports")
                 .get(i)
-                .get("ebit")
-                .asDouble();
+                .get("ebit");
+
+                metric += (node.isNull() || node.asString().equals("None")) ? 0 : node.asDouble();
         }
         return (double) Math.round(metric / MILLION);
     }
@@ -118,15 +119,25 @@ public class MetricPickerService {
 
             metrics.putIfAbsent(metric, value);
         }
-        return Math.round((metrics.get("totalCurrentAssets")
+
+        if ((metrics.get("totalCurrentAssets")
+                - metrics.get("cashAndCashEquivalentsAtCarryingValue")
+                - metrics.get("totalCurrentLiabilities")
+                + metrics.get("shortTermDebt")) > 0) {
+
+            return Math.round((metrics.get("totalCurrentAssets")
                 - metrics.get("cashAndCashEquivalentsAtCarryingValue")
                 - metrics.get("totalCurrentLiabilities")
                 + metrics.get("shortTermDebt"))
                 / MILLION);
+            
+        } else {
+            return 0;
+        }
     }
 
     public static double getFixedAssets(String ticker) {
-        // Net Fixed Assets = totalNonCurrentAssets - intangibleAssets - goodwill
+        // Net Fixed Assets = totalNonCurrentAssets - intangibleAssets - goodwill - longTermInvestments
 
         String path = String.format(ALPHA_BALANCE, ticker);
         JsonNode json = JsonFileReader.read(path);
@@ -135,6 +146,7 @@ public class MetricPickerService {
         metrics.put("totalNonCurrentAssets", null);
         metrics.put("intangibleAssets", null);
         metrics.put("goodwill", null);
+        metrics.put("longTermInvestments", null);
         
         for (String metric : metrics.keySet()) {
             JsonNode node = json
@@ -148,7 +160,8 @@ public class MetricPickerService {
         }
         return Math.round((metrics.get("totalNonCurrentAssets")
                 - metrics.get("intangibleAssets")
-                - metrics.get("goodwill"))
+                - metrics.get("goodwill")
+                - metrics.get("longTermInvestments"))
                 / MILLION);
     }
 }

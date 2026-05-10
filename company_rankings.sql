@@ -3,7 +3,7 @@ WITH RankedData AS (
     SELECT 
         ticker,
         name,
-        "latest quarter date",
+        -- "latest quarter date",
         "earnings yield %",
         "return on capital %",
         -- Rank 1 for the highest yield, etc.
