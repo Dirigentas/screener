@@ -22,4 +22,10 @@ public class MidStats {
     
     @Column(name = "fixed assets", comment = "Value of a company's long-term physical resources")
     private Double fixedAssets; // Net Fixed Assets = totalNonCurrentAssets - intangibleAssets - goodwill
+
+    @Column(name = "EPS ttm", comment = "Trailing twelve month earnings per share ")
+    private Double eps;
+
+    @Column(name = "PE", comment = "Price to Earnings")
+    private Double pe;
 }

@@ -61,6 +61,9 @@ public class ScreenerApplication {
                 String name = MetricPickerService.getCompanyName(ticker);
                 String latestQuarter = MetricPickerService.getLatestQuarter(ticker);
                 double ev = MetricPickerService.getCompanyEV(ticker);
+                double eps = MetricPickerService.getEpsTtm(ticker);
+                double pe = MetricPickerService.getPe(ticker);
+                
                 // EBIT
                 double ebitAlph = MetricPickerService.getAlphavantageEBIT(ticker);
                 double ebitFinn = MetricPickerService.getFinnhubEBIT(ticker);
@@ -78,6 +81,9 @@ public class ScreenerApplication {
                 // Return on Capital
                 midStats.setWorkingCapital(workingCapital);
                 midStats.setFixedAssets(fixedAssets);
+                midStats.setEps(eps);
+                midStats.setPe(pe);
+                
 
                 // add company data to DB
                 MagicFormula magicFormula = new MagicFormula();

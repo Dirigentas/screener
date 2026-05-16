@@ -3,6 +3,7 @@
 * develop methods for key financial indicators:
   - all phil town methodology
   - all 'Revolution Investing' metrics
+  - piotrovski score
   - separate table for risk metrics from google sheets
 * combine some methodologies and risk metrics for unified investable metric (just a thought)
 * Explore other data providers: 
