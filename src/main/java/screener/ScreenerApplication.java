@@ -19,7 +19,7 @@ import screener.utils.TxtFileReader;
 @SpringBootApplication
 public class ScreenerApplication {
 
-    private static final ArrayList<String> TICKERS = TxtFileReader.read("./rawData/tickers.txt");
+    private static final ArrayList<String> TICKERS = TxtFileReader.read("./tickers.txt");
     private static final ArrayList<String> ALL_TICKERS = new ArrayList<>(
         Arrays.asList(new File("./rawData/").list((dir, name) -> new File(dir, name).isDirectory()))
     );
