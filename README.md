@@ -1,9 +1,11 @@
 ## Roudmap
+  - all Rule1 metrics
 
-* develop methods for key financial indicators:
-  - all phil town methodology
+  - all TenCap metrics
+  - all PBT metrics
   - all 'Revolution Investing' metrics
-  - piotrovski score
+  - piotrovski score metrics
+  
   - separate table for risk metrics from google sheets
 * combine some methodologies and risk metrics for unified investable metric (just a thought)
 * Explore other data providers: 

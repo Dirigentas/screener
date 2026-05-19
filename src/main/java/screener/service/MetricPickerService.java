@@ -1,5 +1,6 @@
 package screener.service;
 
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,6 +35,18 @@ public class MetricPickerService {
         double metric = json
                 .get("PERatio")
                 .asDouble();
+
+        return metric;
+    }
+
+    public static BigInteger getSharesCount(String ticker) {
+
+        String path = String.format(ALPHA_OVERVIEW, ticker);
+        JsonNode json = JsonFileReader.read(path);
+
+        BigInteger metric = json
+                .get("SharesOutstanding")
+                .asBigInteger();
 
         return metric;
     }

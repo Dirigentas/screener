@@ -1,5 +1,7 @@
 package screener.entity;
 
+import java.math.BigInteger;
+
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -28,4 +30,7 @@ public class MidStats {
 
     @Column(name = "PE", comment = "Price to Earnings")
     private Double pe;
+
+    @Column(name = "shares count", comment = "")
+    private BigInteger sharesCount;
 }

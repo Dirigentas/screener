@@ -1,6 +1,7 @@
 package screener;
 
 import java.io.File;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -57,46 +58,45 @@ public class ScreenerApplication {
 
             for (String ticker : ALL_TICKERS) {
 
-                // read data from json
+                // pick from json
                 String name = MetricPickerService.getCompanyName(ticker);
+                BigInteger sharesCount = MetricPickerService.getSharesCount(ticker);
                 String latestQuarter = MetricPickerService.getLatestQuarter(ticker);
                 double ev = MetricPickerService.getCompanyEV(ticker);
                 double eps = MetricPickerService.getEpsTtm(ticker);
                 double pe = MetricPickerService.getPe(ticker);
-                
-                // EBIT
                 double ebitAlph = MetricPickerService.getAlphavantageEBIT(ticker);
                 double ebitFinn = MetricPickerService.getFinnhubEBIT(ticker);
-                double averageEbit = (double) Math.round((ebitAlph + ebitFinn) / 2 * 10) / 10;
-
                 double workingCapital = MetricPickerService.getWorkingCapital(ticker);
                 double fixedAssets = MetricPickerService.getFixedAssets(ticker);
 
-                // mid-stats data to DB
+                // calculations
+                double averageEbit = (double) Math.round((ebitAlph + ebitFinn) / 2 * 10) / 10;
+                double earningsYield = (double) Math.round(averageEbit / ev * 100 * 10) / 10;
+                double returnOnCapital = (double) Math.round(averageEbit / (workingCapital + fixedAssets)* 100 * 10) / 10;
+
+                // mid_stats DB table
                 MidStats midStats = new MidStats();
                 midStats.setTicker(ticker);
-                // Earnings Yield
                 midStats.setEv(ev);
                 midStats.setEbit(averageEbit);
-                // Return on Capital
                 midStats.setWorkingCapital(workingCapital);
                 midStats.setFixedAssets(fixedAssets);
                 midStats.setEps(eps);
                 midStats.setPe(pe);
+                midStats.setSharesCount(sharesCount);
                 
-
-                // add company data to DB
+                // magic_formula DB table
                 MagicFormula magicFormula = new MagicFormula();
                 magicFormula.setTicker(ticker);
                 magicFormula.setAName(name);
                 magicFormula.setZLatestQuarter(latestQuarter);
-                magicFormula.setEarningsYield((double) Math.round(averageEbit / ev * 100 * 10) / 10);
-                magicFormula.setReturnOnCapital((double) Math.round(averageEbit / (workingCapital + fixedAssets)* 100 * 10) / 10);
+                magicFormula.setEarningsYield(earningsYield);
+                magicFormula.setReturnOnCapital(returnOnCapital);
 
+                
                 midStatsRepository.save(midStats);
-
-                MagicFormula addedToDBCompany = magicFormulaService.createNewCompany(magicFormula);
-                System.out.println("Successfully added company with ID: " + addedToDBCompany.getTicker());
+                magicFormulaService.createNewCompany(magicFormula);
             }
             // Shut down the Spring container
             context.close();
