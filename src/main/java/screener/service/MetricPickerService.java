@@ -31,11 +31,10 @@ public class MetricPickerService {
 
         String path = String.format(ALPHA_OVERVIEW, ticker);
         JsonNode json = JsonFileReader.read(path);
+        JsonNode node = json
+                .get("PERatio");
 
-        double metric = json
-                .get("PERatio")
-                .asDouble();
-
+        double metric = (node.isNull() || node.asString().equals("None")) ? 0 : node.asDouble();
         return metric;
     }
 

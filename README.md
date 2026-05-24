@@ -1,10 +1,9 @@
 ## Roudmap
+  - piotrovski score metrics
   - all Rule1 metrics
-
   - all TenCap metrics
   - all PBT metrics
   - all 'Revolution Investing' metrics
-  - piotrovski score metrics
   
   - separate table for risk metrics from google sheets
 * combine some methodologies and risk metrics for unified investable metric (just a thought)

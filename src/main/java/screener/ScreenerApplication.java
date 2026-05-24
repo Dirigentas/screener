@@ -29,7 +29,7 @@ public class ScreenerApplication {
         //----------------------------//
         // Controller                //
         int runAlphavantageApi = 0; // Change to '0' to skip API fetch
-        int runFinnhubApi = 0;     // Change to '0' to skip API fetch
+        int runFinnhubApi =1;     // Change to '0' to skip API fetch
         int runDb = 1;            // Change to '0' to skip DB patch
         //-----------------------//
 
