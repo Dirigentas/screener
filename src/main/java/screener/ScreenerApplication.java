@@ -29,7 +29,7 @@ public class ScreenerApplication {
         //----------------------------//
         // Controller                //
         int runAlphavantageApi = 0; // Change to '0' to skip API fetch
-        int runFinnhubApi =1;     // Change to '0' to skip API fetch
+        int runFinnhubApi = 0;     // Change to '0' to skip API fetch
         int runDb = 1;            // Change to '0' to skip DB patch
         //-----------------------//
 
@@ -69,6 +69,7 @@ public class ScreenerApplication {
                 double ebitFinn = MetricPickerService.getFinnhubEBIT(ticker);
                 double workingCapital = MetricPickerService.getWorkingCapital(ticker);
                 double fixedAssets = MetricPickerService.getFixedAssets(ticker);
+                double cashFlowOperationsTtm = MetricPickerService.getCashFlowOperationsTtm(ticker);
 
                 // calculations
                 double averageEbit = (double) Math.round((ebitAlph + ebitFinn) / 2 * 10) / 10;
@@ -85,6 +86,7 @@ public class ScreenerApplication {
                 midStats.setEps(eps);
                 midStats.setPe(pe);
                 midStats.setSharesCount(sharesCount);
+                midStats.setCashFlowOperationsTtm(cashFlowOperationsTtm);
                 
                 // magic_formula DB table
                 MagicFormula magicFormula = new MagicFormula();

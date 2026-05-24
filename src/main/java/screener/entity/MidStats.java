@@ -33,4 +33,7 @@ public class MidStats {
 
     @Column(name = "shares count", comment = "")
     private BigInteger sharesCount;
+
+    @Column(name = "cash flow from operations ttm", comment = "trailing twelve months")
+    private Double cashFlowOperationsTtm;
 }

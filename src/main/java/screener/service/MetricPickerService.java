@@ -10,9 +10,10 @@ import tools.jackson.databind.JsonNode;
 public class MetricPickerService {
 
     private static final int MILLION  = 1_000_000;
-    private static final String ALPHA_OVERVIEW  = "rawData/%s/alphavantage.OVERVIEW.json";
-    private static final String ALPHA_INCOME  = "rawData/%s/alphavantage.INCOME_STATEMENT.json";
     private static final String ALPHA_BALANCE  = "rawData/%s/alphavantage.BALANCE_SHEET.json";
+    private static final String ALPHA_CASHFLOW  = "rawData/%s/alphavantage.CASH_FLOW.json";
+    private static final String ALPHA_INCOME  = "rawData/%s/alphavantage.INCOME_STATEMENT.json";
+    private static final String ALPHA_OVERVIEW  = "rawData/%s/alphavantage.OVERVIEW.json";
     private static final String FINN_ALL  = "rawData/%s/finnhub.all.json";
     
     public static String getCompanyName(String ticker) {
@@ -200,5 +201,22 @@ public class MetricPickerService {
                 - metrics.get("goodwill")
                 - metrics.get("longTermInvestments"))
                 / MILLION);
+    }
+
+    public static double getCashFlowOperationsTtm(String ticker) {
+
+        String path = String.format(ALPHA_CASHFLOW, ticker);
+        JsonNode json = JsonFileReader.read(path);
+        double metric = 0;
+        
+        for (int i = 0; i < 4; i++) {
+            JsonNode node = json
+                .get("quarterlyReports")
+                .get(i)
+                .get("operatingCashflow");
+
+                metric += (node.isNull() || node.asString().equals("None")) ? 0 : node.asDouble();
+        }
+        return (double) Math.round(metric / MILLION);
     }
 }
