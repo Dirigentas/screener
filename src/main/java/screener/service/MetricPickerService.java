@@ -1,6 +1,5 @@
 package screener.service;
 
-import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,16 +38,16 @@ public class MetricPickerService {
         return metric;
     }
 
-    public static BigInteger getSharesCount(String ticker) {
+    public static double getSharesCountM(String ticker) {
 
         String path = String.format(ALPHA_OVERVIEW, ticker);
         JsonNode json = JsonFileReader.read(path);
 
-        BigInteger metric = json
+        double metric = json
                 .get("SharesOutstanding")
-                .asBigInteger();
+                .asDouble();
 
-        return metric;
+        return (double) Math.round(metric / MILLION * 10) / 10;
     }
 
     public static String getLatestQuarter(String ticker) {
@@ -65,7 +64,7 @@ public class MetricPickerService {
         return metric;
     }
 
-    public static double getCompanyEV(String ticker) {
+    public static double getCompanyEvM(String ticker) {
 
         String path = String.format(FINN_ALL, ticker);
         JsonNode json = JsonFileReader.read(path);
@@ -91,7 +90,7 @@ public class MetricPickerService {
         return (double) Math.round(metric * 100) / 100;
     }
     
-    public static double getFinnhubEBIT(String ticker) {
+    public static double getFinnhubEbitM(String ticker) {
 
         String path1 = String.format(FINN_ALL, ticker);
         JsonNode json1 = JsonFileReader.read(path1);
@@ -108,17 +107,10 @@ public class MetricPickerService {
                 .asDouble();
         }
 
-        String path2 = String.format(ALPHA_OVERVIEW, ticker);
-        JsonNode json2 = JsonFileReader.read(path2);
-
-        double sharesOutstanding = json2
-                .get("SharesOutstanding")
-                .asDouble();
-
-        return (double) Math.round(ebitPerShare * sharesOutstanding / MILLION);
+        return (double) Math.round(ebitPerShare * getSharesCountM(ticker) * 10) / 10;
     }
 
-    public static double getAlphavantageEBIT(String ticker) {
+    public static double getAlphavantageEbitM(String ticker) {
 
         String path = String.format(ALPHA_INCOME, ticker);
         JsonNode json = JsonFileReader.read(path);
@@ -132,10 +124,10 @@ public class MetricPickerService {
 
                 metric += (node.isNull() || node.asString().equals("None")) ? 0 : node.asDouble();
         }
-        return (double) Math.round(metric / MILLION);
+        return (double) Math.round(metric / MILLION * 10) / 10;
     }
 
-    public static double getWorkingCapital(String ticker) {
+    public static double getWorkingCapitalM(String ticker) {
         // Net Working Capital = totalCurrentAssets - cashAndCashEquivalentsAtCarryingValue - totalCurrentLiabilities - shortTermDebt
 
         String path = String.format(ALPHA_BALANCE, ticker);
@@ -158,23 +150,21 @@ public class MetricPickerService {
             metrics.putIfAbsent(metric, value);
         }
 
-        if ((metrics.get("totalCurrentAssets")
+        double finalMetric = metrics.get("totalCurrentAssets")
                 - metrics.get("cashAndCashEquivalentsAtCarryingValue")
                 - metrics.get("totalCurrentLiabilities")
-                + metrics.get("shortTermDebt")) > 0) {
+                + metrics.get("shortTermDebt");
 
-            return Math.round((metrics.get("totalCurrentAssets")
-                - metrics.get("cashAndCashEquivalentsAtCarryingValue")
-                - metrics.get("totalCurrentLiabilities")
-                + metrics.get("shortTermDebt"))
-                / MILLION);
+        if (finalMetric > 0) {
+
+            return (double) Math.round(finalMetric / MILLION * 10) / 10;
             
         } else {
             return 0;
         }
     }
 
-    public static double getFixedAssets(String ticker) {
+    public static double getFixedAssetsM(String ticker) {
         // Net Fixed Assets = totalNonCurrentAssets - intangibleAssets - goodwill - longTermInvestments
 
         String path = String.format(ALPHA_BALANCE, ticker);
@@ -196,14 +186,16 @@ public class MetricPickerService {
 
             metrics.putIfAbsent(metric, value);
         }
-        return Math.round((metrics.get("totalNonCurrentAssets")
+
+        double finalMetric = metrics.get("totalNonCurrentAssets")
                 - metrics.get("intangibleAssets")
                 - metrics.get("goodwill")
-                - metrics.get("longTermInvestments"))
-                / MILLION);
+                - metrics.get("longTermInvestments");
+
+        return (double) Math.round(finalMetric / MILLION * 10) / 10;
     }
 
-    public static double getCashFlowOperationsTtm(String ticker) {
+    public static double getCashFlowOperationsTtmM(String ticker) {
 
         String path = String.format(ALPHA_CASHFLOW, ticker);
         JsonNode json = JsonFileReader.read(path);
@@ -217,6 +209,6 @@ public class MetricPickerService {
 
                 metric += (node.isNull() || node.asString().equals("None")) ? 0 : node.asDouble();
         }
-        return (double) Math.round(metric / MILLION);
+        return (double) Math.round(metric / MILLION * 10) / 10;
     }
 }

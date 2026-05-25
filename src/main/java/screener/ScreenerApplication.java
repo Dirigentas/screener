@@ -1,7 +1,6 @@
 package screener;
 
 import java.io.File;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -60,33 +59,33 @@ public class ScreenerApplication {
 
                 // pick from json
                 String name = MetricPickerService.getCompanyName(ticker);
-                BigInteger sharesCount = MetricPickerService.getSharesCount(ticker);
+                double sharesCountM = MetricPickerService.getSharesCountM(ticker);
                 String latestQuarter = MetricPickerService.getLatestQuarter(ticker);
-                double ev = MetricPickerService.getCompanyEV(ticker);
+                double evM = MetricPickerService.getCompanyEvM(ticker);
                 double eps = MetricPickerService.getEpsTtm(ticker);
                 double pe = MetricPickerService.getPe(ticker);
-                double ebitAlph = MetricPickerService.getAlphavantageEBIT(ticker);
-                double ebitFinn = MetricPickerService.getFinnhubEBIT(ticker);
-                double workingCapital = MetricPickerService.getWorkingCapital(ticker);
-                double fixedAssets = MetricPickerService.getFixedAssets(ticker);
-                double cashFlowOperationsTtm = MetricPickerService.getCashFlowOperationsTtm(ticker);
+                double ebitAlphM = MetricPickerService.getAlphavantageEbitM(ticker);
+                double ebitFinnM = MetricPickerService.getFinnhubEbitM(ticker);
+                double workingCapitalM = MetricPickerService.getWorkingCapitalM(ticker);
+                double fixedAssetsM = MetricPickerService.getFixedAssetsM(ticker);
+                double cashFlowOperationsTtmM = MetricPickerService.getCashFlowOperationsTtmM(ticker);
 
                 // calculations
-                double averageEbit = (double) Math.round((ebitAlph + ebitFinn) / 2 * 10) / 10;
-                double earningsYield = (double) Math.round(averageEbit / ev * 100 * 10) / 10;
-                double returnOnCapital = (double) Math.round(averageEbit / (workingCapital + fixedAssets)* 100 * 10) / 10;
+                double averageEbitM = (double) Math.round((ebitAlphM + ebitFinnM) / 2 * 10) / 10;
+                double earningsYield = (double) Math.round(averageEbitM / evM * 100 * 10) / 10;
+                double returnOnCapital = (double) Math.round(averageEbitM / (workingCapitalM + fixedAssetsM)* 100 * 10) / 10;
 
                 // mid_stats DB table
                 MidStats midStats = new MidStats();
                 midStats.setTicker(ticker);
-                midStats.setEv(ev);
-                midStats.setEbit(averageEbit);
-                midStats.setWorkingCapital(workingCapital);
-                midStats.setFixedAssets(fixedAssets);
+                midStats.setEvM(evM);
+                midStats.setEbitM(averageEbitM);
+                midStats.setWorkingCapitalM(workingCapitalM);
+                midStats.setFixedAssetsM(fixedAssetsM);
                 midStats.setEps(eps);
                 midStats.setPe(pe);
-                midStats.setSharesCount(sharesCount);
-                midStats.setCashFlowOperationsTtm(cashFlowOperationsTtm);
+                midStats.setSharesCountM(sharesCountM);
+                midStats.setCashFlowOperationsTtmM(cashFlowOperationsTtmM);
                 
                 // magic_formula DB table
                 MagicFormula magicFormula = new MagicFormula();
