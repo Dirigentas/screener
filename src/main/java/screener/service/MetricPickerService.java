@@ -89,6 +89,40 @@ public class MetricPickerService {
 
         return (double) Math.round(metric * 100) / 100;
     }
+
+    public static double getRoaTtm(String ticker) {
+
+        String path = String.format(FINN_ALL, ticker);
+        JsonNode json = JsonFileReader.read(path);
+
+        double metric = json
+                .get("series")
+                .get("quarterly")
+                .get("roaTTM")
+                .get(0)
+                .get("v")
+                .asDouble();
+
+        System.out.println("TEST: " + metric);
+
+        return metric;
+    }
+
+    public static double getRoaPreviousTtm(String ticker) {
+
+        String path = String.format(FINN_ALL, ticker);
+        JsonNode json = JsonFileReader.read(path);
+
+        double metric = json
+                .get("series")
+                .get("quarterly")
+                .get("roaTTM")
+                .get(4)
+                .get("v")
+                .asDouble();
+
+        return metric;
+    }
     
     public static double getFinnhubEbitM(String ticker) {
 

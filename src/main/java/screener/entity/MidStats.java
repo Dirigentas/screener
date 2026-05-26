@@ -34,4 +34,10 @@ public class MidStats {
 
     @Column(name = "CFO ttm M", comment = "Trailing twelve months cash flow from operations in millions")
     private Double cashFlowOperationsTtmM;
+
+    @Column(name = "ROA TTM", comment = "Trailing twelve months return on assets")
+    private Double roaTtm;
+
+    @Column(name = "ROA -1Y TTM", comment = "Previous year twelve months return on assets")
+    private Double roaPreviousTtm;
 }

@@ -69,6 +69,9 @@ public class ScreenerApplication {
                 double workingCapitalM = MetricPickerService.getWorkingCapitalM(ticker);
                 double fixedAssetsM = MetricPickerService.getFixedAssetsM(ticker);
                 double cashFlowOperationsTtmM = MetricPickerService.getCashFlowOperationsTtmM(ticker);
+                double roaTtm = MetricPickerService.getRoaTtm(ticker);
+                double roaPreviousTtm = MetricPickerService.getRoaPreviousTtm(ticker);
+                
 
                 // calculations
                 double averageEbitM = (double) Math.round((ebitAlphM + ebitFinnM) / 2 * 10) / 10;
@@ -86,6 +89,8 @@ public class ScreenerApplication {
                 midStats.setPe(pe);
                 midStats.setSharesCountM(sharesCountM);
                 midStats.setCashFlowOperationsTtmM(cashFlowOperationsTtmM);
+                midStats.setRoaTtm(roaTtm);
+                midStats.setRoaPreviousTtm(roaPreviousTtm);
                 
                 // magic_formula DB table
                 MagicFormula magicFormula = new MagicFormula();
