@@ -71,6 +71,7 @@ public class ScreenerApplication {
                 double cashFlowOperationsTtmM = MetricPickerService.getCashFlowOperationsTtmM(ticker);
                 double roaTtm = MetricPickerService.getRoaTtm(ticker);
                 double roaPreviousTtm = MetricPickerService.getRoaPreviousTtm(ticker);
+                double earningsTtmM = MetricPickerService.getEarningsTtmM(ticker);
                 
 
                 // calculations
@@ -91,6 +92,7 @@ public class ScreenerApplication {
                 midStats.setCashFlowOperationsTtmM(cashFlowOperationsTtmM);
                 midStats.setRoaTtm(roaTtm);
                 midStats.setRoaPreviousTtm(roaPreviousTtm);
+                midStats.setEarningsTtmM(earningsTtmM);
                 
                 // magic_formula DB table
                 MagicFormula magicFormula = new MagicFormula();

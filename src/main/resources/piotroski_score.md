@@ -5,18 +5,14 @@ These metrics measure the company's ability to generate funds internally and che
 
 1. Return on Assets (ROA): Is the company generating a profit from its assets? &check;
 
-ROA= 
-Total Assets at Beginning of Year
-Net Income
+ROA = Total Assets at Beginning of Year / Net Income
  
 Score 1 if ROA>0 (positive net income), else 0.
 
 
 2. Operating Cash Flow (CFO): Is the core business actually generating cash? &check;
 
-CFO= 
-Total Assets at Beginning of Year
-Cash Flow from Operations
+CFO= Total Assets at Beginning of Year / Cash Flow from Operations
 ​
 Score 1 if CFO>0, else 0.
 
@@ -26,27 +22,24 @@ Score 1 if CFO>0, else 0.
 Score 1 if current year's ROA> prior year's ROA, else 0.
 
 
-4. Accruals (Quality of Earnings): This checks if the earnings are backed by real cash, helping you flag aggressive accounting tricks.
+4. Quality of Earnings: Checks if the earnings are backed by real cash, helping you flag aggressive accounting tricks. &check;
 
-Score 1 if Cash Flow from Operations > Net Income, else 0.
+Score 1 if Cash Flow from Operations > Net Income, else 0. 
+
 
 ### Leverage, Liquidity, and Source of Funds (3 Points)
 These metrics flag companies that are taking on too much debt, struggling to pay short-term bills, or diluting their shareholders.
 
 5. Change in Leverage (ΔLEVER): Is the company reducing its debt burden?
 
-Leverage= 
-Average Total Assets
-Long-Term Debt
+Leverage = Average Total Assets / Long-Term Debt
  
 Score 1 if current year's leverage ratio is lower than the prior year's, else 0.
 
 
 6. Change in Liquidity (ΔLIQUID): Is the company improving its ability to cover short-term obligations?
 
-Current Ratio= 
-Current Liabilities
-Current Assets
+Current Ratio = Current Liabilities / Current Assets
 ​
 Score 1 if current year's Current Ratio > prior year's Current Ratio, else 0.
 
@@ -60,22 +53,19 @@ These metrics measure how well the company is squeezing value out of its operati
 
 8. Change in Gross Margin (ΔMARGIN): Is the company improving its pricing power or cost of goods sold?
 
-Gross Margin= 
-Total Revenue
-Gross Profit
+Gross Margin = Total Revenue / Gross Profit
 ​
 Score 1 if current year's Gross Margin > prior year's Gross Margin, else 0.
 
 
 9. Change in Asset Turnover (ΔTURN): Is the company generating more sales per dollar of assets?
 
-Asset Turnover= 
-Total Assets at Beginning of Year
-Total Revenue
+Asset Turnover = Total Assets at Beginning of Year / Total Revenue
 ​
 Score 1 if current year's Asset Turnover > prior year's Asset Turnover, else 0.
 
-Tallying the Final Score
+
+### Tallying the Final Score
 Once your screener runs these 9 calculations, it should sum the points for a final score between 0 and 9:
 
 8 or 9: Very strong fundamentals (these are your buy candidates).

@@ -40,4 +40,7 @@ public class MidStats {
 
     @Column(name = "ROA -1Y TTM", comment = "Previous year twelve months return on assets")
     private Double roaPreviousTtm;
+
+    @Column(name = "Net Income TTM M", comment = "")
+    private Double earningsTtmM;
 }

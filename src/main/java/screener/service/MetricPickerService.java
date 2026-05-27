@@ -161,6 +161,23 @@ public class MetricPickerService {
         return (double) Math.round(metric / MILLION * 10) / 10;
     }
 
+    public static double getEarningsTtmM(String ticker) {
+
+        String path = String.format(ALPHA_INCOME, ticker);
+        JsonNode json = JsonFileReader.read(path);
+        double metric = 0;
+        
+        for (int i = 0; i < 4; i++) {
+            JsonNode node = json
+                .get("quarterlyReports")
+                .get(i)
+                .get("netIncome");
+
+                metric += (node.isNull() || node.asString().equals("None")) ? 0 : node.asDouble();
+        }
+        return (double) Math.round(metric / MILLION * 10) / 10;
+    }
+
     public static double getWorkingCapitalM(String ticker) {
         // Net Working Capital = totalCurrentAssets - cashAndCashEquivalentsAtCarryingValue - totalCurrentLiabilities - shortTermDebt
 

@@ -19,7 +19,13 @@ WITH
       CASE 
         WHEN "ROA TTM" > "ROA -1Y TTM" THEN 1 
         ELSE 0 
-      END AS roa_change
+      END AS roa_change,
+
+      -- 4. Quality of Earnings
+      CASE 
+        WHEN "CFO ttm M" > "Net Income TTM M" THEN 1 
+        ELSE 0 
+      END AS earnings_quality
       
       -- Note: You can add the other 7 Piotroski criteria here following the same pattern
     FROM
@@ -30,8 +36,9 @@ SELECT
   score_eps,
   score_cfo,
   roa_change,
+  earnings_quality,
   -- The last column sums up all the previous score columns
-  (score_eps + score_cfo + roa_change) AS total_piotroski_score
+  (score_eps + score_cfo + roa_change + earnings_quality) AS total_piotroski_score
 FROM
   scored_data
 ORDER BY
