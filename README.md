@@ -9,7 +9,7 @@
 * combine some methodologies and risk metrics for unified investable metric (just a thought)
 * Explore other data providers: 
   - Massive (formerly Polygon.io)
-  - Financial Modeling Prep (FMP)
+  - Financial Modeling Prep (FMP) (šitas tikrai turi metines ataskaitas)
   - Twelve Data
 
 ## Implemented
