@@ -32,6 +32,9 @@ public class MidStats {
     @Column(name = "shares count M", comment = "")
     private Double sharesCountM;
 
+    @Column(name = "shares count -1Y M", comment = "")
+    private Double sharesCountPreviousM;
+
     @Column(name = "CFO ttm M", comment = "Trailing twelve months cash flow from operations in millions")
     private Double cashFlowOperationsTtmM;
 

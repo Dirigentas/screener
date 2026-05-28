@@ -29,25 +29,15 @@ public class MetricPickerService {
 
     public static double getPe(String ticker) {
 
-        String path = String.format(ALPHA_OVERVIEW, ticker);
+        String path = String.format(FINN_ALL, ticker);
         JsonNode json = JsonFileReader.read(path);
         JsonNode node = json
-                .get("PERatio");
+                .get("metric")
+                .get("peTTM");
 
         double metric = (node.isNull() || node.asString().equals("None")) ? 0 : node.asDouble();
-        return metric;
-    }
 
-    public static double getSharesCountM(String ticker) {
-
-        String path = String.format(ALPHA_OVERVIEW, ticker);
-        JsonNode json = JsonFileReader.read(path);
-
-        double metric = json
-                .get("SharesOutstanding")
-                .asDouble();
-
-        return (double) Math.round(metric / MILLION * 10) / 10;
+        return (double) Math.round(metric * 10) / 10;
     }
 
     public static String getLatestQuarter(String ticker) {
@@ -62,6 +52,38 @@ public class MetricPickerService {
                 .asString();
 
         return metric;
+    }
+
+    public static double getSharesCountPreviousM(String ticker) {
+
+        String path = String.format(ALPHA_BALANCE, ticker);
+        JsonNode json = JsonFileReader.read(path);
+        double metric = 0;
+
+        JsonNode node = json
+                .get("quarterlyReports")
+                .get(4)
+                .get("commonStockSharesOutstanding");
+
+        metric += (node.isNull() || node.asString().equals("None")) ? 0 : node.asDouble();
+
+        return (double) Math.round(metric / MILLION * 10) / 10;
+    }
+
+    public static double getSharesCountM(String ticker) {
+
+        String path = String.format(ALPHA_BALANCE, ticker);
+        JsonNode json = JsonFileReader.read(path);
+        double metric = 0;
+
+        JsonNode node = json
+                .get("quarterlyReports")
+                .get(0)
+                .get("commonStockSharesOutstanding");
+
+        metric += (node.isNull() || node.asString().equals("None")) ? 0 : node.asDouble();
+
+        return (double) Math.round(metric / MILLION * 10) / 10;
     }
 
     public static double getCompanyEvM(String ticker) {

@@ -60,6 +60,7 @@ public class ScreenerApplication {
                 // pick from json
                 String name = MetricPickerService.getCompanyName(ticker);
                 double sharesCountM = MetricPickerService.getSharesCountM(ticker);
+                double sharesCountPreviousM = MetricPickerService.getSharesCountPreviousM(ticker);
                 String latestQuarter = MetricPickerService.getLatestQuarter(ticker);
                 double evM = MetricPickerService.getCompanyEvM(ticker);
                 double eps = MetricPickerService.getEpsTtm(ticker);
@@ -89,6 +90,7 @@ public class ScreenerApplication {
                 midStats.setEps(eps);
                 midStats.setPe(pe);
                 midStats.setSharesCountM(sharesCountM);
+                midStats.setSharesCountPreviousM(sharesCountPreviousM);
                 midStats.setCashFlowOperationsTtmM(cashFlowOperationsTtmM);
                 midStats.setRoaTtm(roaTtm);
                 midStats.setRoaPreviousTtm(roaPreviousTtm);

@@ -25,9 +25,14 @@ WITH
       CASE 
         WHEN "CFO ttm M" > "Net Income TTM M" THEN 1 
         ELSE 0 
-      END AS earnings_quality
+      END AS earnings_quality,
+
+      -- 7. Change in shares count
+      CASE 
+        WHEN "shares count M" <= "shares count -1Y M" THEN 1 
+        ELSE 0 
+      END AS dilusion
       
-      -- Note: You can add the other 7 Piotroski criteria here following the same pattern
     FROM
       mid_stats
   )
@@ -37,8 +42,9 @@ SELECT
   score_cfo,
   roa_change,
   earnings_quality,
+  dilusion,
   -- The last column sums up all the previous score columns
-  (score_eps + score_cfo + roa_change + earnings_quality) AS total_piotroski_score
+  (score_eps + score_cfo + roa_change + earnings_quality + dilusion) AS total_piotroski_score
 FROM
   scored_data
 ORDER BY
