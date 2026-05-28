@@ -1,5 +1,6 @@
 ## Roudmap
-  - piotrovski score metrics (done: 2 from 9)
+  - sumažinti vienu alphavantege call
+  - piotrovski score metrics (done: 4 from 9)
   - all Rule1 metrics
   - all TenCap metrics
   - all PBT metrics
