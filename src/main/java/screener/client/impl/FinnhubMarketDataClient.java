@@ -19,7 +19,8 @@ public class FinnhubMarketDataClient implements MarketDataClient {
             .baseUrl(URL)
             .build();
     }
-
+    // /stock/metric?symbol=AAPL&metric=all
+    // /stock/profile2?symbol=AAPL
     @Override
     public JsonNode getCompanyJson(String ticker, String metric) {
         return client.get()

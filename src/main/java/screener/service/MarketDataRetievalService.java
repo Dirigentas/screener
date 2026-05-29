@@ -54,6 +54,11 @@ public class MarketDataRetievalService {
         ArrayList<String> endpoints = new ArrayList<>();
         endpoints.add("finnhub.all");
 
+
+        // /stock/metric?symbol=AAPL&metric=all
+        
+        // /stock/profile2?symbol=AAPL
+
         for (String ticker : tickers) {
             for (String endpoint : endpoints) {
                 

@@ -19,8 +19,8 @@ import screener.utils.TxtFileReader;
 @SpringBootApplication
 public class ScreenerApplication {
 
-    private static final ArrayList<String> TICKERS = TxtFileReader.read("./tickers.txt");
-    private static final ArrayList<String> ALL_TICKERS = new ArrayList<>(
+    private static final ArrayList<String> TICKERS_TXT = TxtFileReader.read("./tickers.txt");
+    private static final ArrayList<String> TICKERS_ALL = new ArrayList<>(
         Arrays.asList(new File("./rawData/").list((dir, name) -> new File(dir, name).isDirectory()))
     );
     
@@ -37,14 +37,14 @@ public class ScreenerApplication {
         //---------------------------------------------------------------------------------------
         // get data from API endpoints  for tickers.txt
         if (runAlphavantageApi == 1) {
-            MarketDataRetievalService.getAlphavantageApiData(TICKERS);
+            MarketDataRetievalService.getAlphavantageApiData(TICKERS_TXT);
         }
         //---------------------------------------------------------------------------------------
 
         //---------------------------------------------------------------------------------------
         // get data from API endpoints  for all ticker folders in a rawDara folder (mainly for newest EV values)
         if (runFinnhubApi == 1) {
-            MarketDataRetievalService.getFinnhubApiData(ALL_TICKERS);
+            MarketDataRetievalService.getFinnhubApiData(TICKERS_ALL);
         }
         //---------------------------------------------------------------------------------------
         
@@ -55,7 +55,7 @@ public class ScreenerApplication {
             MagicFormulaService magicFormulaService = context.getBean(MagicFormulaService.class);
             MidStatsRepository midStatsRepository = context.getBean(MidStatsRepository.class);
 
-            for (String ticker : ALL_TICKERS) {
+            for (String ticker : TICKERS_ALL) {
 
                 // pick from json
                 String name = MetricPickerService.getCompanyName(ticker);

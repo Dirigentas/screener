@@ -44,7 +44,7 @@ Current Ratio = Current Liabilities / Current Assets
 Score 1 if current year's Current Ratio > prior year's Current Ratio, else 0.
 
 
-7. Change in Shares in Issue (Dilution): Is the company raising emergency capital by printing more stock?
+7. Change in Shares in Issue (Dilution): Is the company raising emergency capital by printing more stock? &check;
 
 Score 1 if the current number of outstanding shares is ≤ the prior year's outstanding shares (meaning no dilution), else 0.
 
