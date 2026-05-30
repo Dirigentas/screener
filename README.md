@@ -1,6 +1,6 @@
 ## Roudmap
   - make that only the first time finnhub profile2 would be called
-  - piotrovski score metrics (done: 4 from 9)
+  - piotrovski score metrics (done: 6 from 9)
   - all Rule1 metrics
   - all TenCap metrics
   - all PBT metrics
