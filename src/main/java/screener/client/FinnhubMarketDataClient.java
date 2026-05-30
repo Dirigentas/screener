@@ -1,13 +1,12 @@
-package screener.client.impl;
+package screener.client;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import screener.client.MarketDataClient;
 import tools.jackson.databind.JsonNode;
 
 @Service
-public class FinnhubMarketDataClient implements MarketDataClient {
+public class FinnhubMarketDataClient {
 
     private final WebClient client;
 
@@ -19,15 +18,24 @@ public class FinnhubMarketDataClient implements MarketDataClient {
             .baseUrl(URL)
             .build();
     }
-    // /stock/metric?symbol=AAPL&metric=all
-    // /stock/profile2?symbol=AAPL
-    @Override
-    public JsonNode getCompanyJson(String ticker, String metric) {
+
+    public JsonNode getCompanyJson(String ticker, String pathParam, String queryParam) {
+        if (queryParam.isEmpty()) {
+            return client.get()
+                .uri(uriBuilder -> uriBuilder
+                    .path("/stock/" + pathParam)
+                    .queryParam("symbol", ticker)
+                    .queryParam("token", KEY)
+                    .build())
+                .retrieve()
+                .bodyToMono(JsonNode.class)
+                .block();
+        }
         return client.get()
             .uri(uriBuilder -> uriBuilder
-                .path("/stock/metric")
+                .path("/stock/" + pathParam)
                 .queryParam("symbol", ticker)
-                .queryParam("metric", metric)
+                .queryParam(queryParam)
                 .queryParam("token", KEY)
                 .build())
             .retrieve()

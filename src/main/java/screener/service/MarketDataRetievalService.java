@@ -5,9 +5,8 @@ import java.util.concurrent.TimeUnit;
 
 import org.springframework.stereotype.Service;
 
-import screener.client.MarketDataClient;
-import screener.client.impl.AlphavantageMarketDataClient;
-import screener.client.impl.FinnhubMarketDataClient;
+import screener.client.AlphavantageMarketDataClient;
+import screener.client.FinnhubMarketDataClient;
 import screener.utils.JsonFileWriter;
 import tools.jackson.databind.JsonNode;
 
@@ -16,27 +15,23 @@ public class MarketDataRetievalService {
 
     public static void getAlphavantageApiData(ArrayList<String> tickers) throws InterruptedException {
         String path;
-        MarketDataClient dataProvider = null;
         JsonNode jsonData = null;
-        MarketDataClient alphavantageMarketDataClient = new AlphavantageMarketDataClient();
+        AlphavantageMarketDataClient alphavantageMarketDataClient = new AlphavantageMarketDataClient();
         
         ArrayList<String> endpoints = new ArrayList<>();
-        endpoints.add("alphavantage.OVERVIEW");
         endpoints.add("alphavantage.INCOME_STATEMENT");
         endpoints.add("alphavantage.BALANCE_SHEET");
         endpoints.add("alphavantage.CASH_FLOW");
+
+        // endpoints.add("alphavantage.OVERVIEW");
 
         for (String ticker : tickers) {
             for (String endpoint : endpoints) {
                 
                 path = String.format("./rawData/%s/%s.json", ticker, endpoint);
 
-                if (endpoint.contains("alphavantage")) {
-                    dataProvider = alphavantageMarketDataClient;
-                }
-                
-                if (dataProvider != null) {
-                    jsonData = dataProvider.getCompanyJson(ticker, endpoint.split("\\.")[1]);
+                if (alphavantageMarketDataClient != null) {
+                    jsonData = alphavantageMarketDataClient.getCompanyJson(ticker, endpoint.split("\\.")[1]);
                     JsonFileWriter.write(path, jsonData);
                 }
                 TimeUnit.SECONDS.sleep(1);
@@ -44,32 +39,31 @@ public class MarketDataRetievalService {
         }
     }
 
-
     public static void getFinnhubApiData(ArrayList<String> tickers) throws InterruptedException {
         String path;
-        MarketDataClient dataProvider = null;
         JsonNode jsonData = null;
-        MarketDataClient finnhubMarketDataClient = new FinnhubMarketDataClient();
+        FinnhubMarketDataClient finnhubMarketDataClient = new FinnhubMarketDataClient();
         
         ArrayList<String> endpoints = new ArrayList<>();
-        endpoints.add("finnhub.all");
-
-
-        // /stock/metric?symbol=AAPL&metric=all
-        
-        // /stock/profile2?symbol=AAPL
+        endpoints.add("finnhub.metric.all");
+        // endpoints.add("finnhub.profile2");
+        // endpoints.add("finnhub.financials-reported");
+        // endpoints.add("finnhub.insider-transactions");
+        // endpoints.add("finnhub.insider-sentiment");
 
         for (String ticker : tickers) {
             for (String endpoint : endpoints) {
-                
-                path = String.format("./rawData/%s/%s.json", ticker, endpoint);
 
-                if (endpoint.contains("finnhub")) {
-                    dataProvider = finnhubMarketDataClient;
+                String[] endpontParts = endpoint.split("\\.");
+                String queryParam = "";
+                if (endpontParts.length > 2) {
+                    queryParam = endpontParts[2];
                 }
                 
-                if (dataProvider != null) {
-                    jsonData = dataProvider.getCompanyJson(ticker, endpoint.split("\\.")[1]);
+                path = String.format("./rawData/%s/%s.%s.json", ticker, endpontParts[0], endpontParts[1]);
+
+                if (finnhubMarketDataClient != null) {
+                    jsonData = finnhubMarketDataClient.getCompanyJson(ticker, endpontParts[1], queryParam);
                     JsonFileWriter.write(path, jsonData);
                 }
             }

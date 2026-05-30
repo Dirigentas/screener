@@ -51,9 +51,9 @@ Score 1 if the current number of outstanding shares is ≤ the prior year's outs
 ### Operating Efficiency (2 Points)
 These metrics measure how well the company is squeezing value out of its operations.
 
-8. Change in Gross Margin (ΔMARGIN): Is the company improving its pricing power or cost of goods sold?
+8. Change in Gross Margin (ΔMARGIN): Is the company improving its pricing power or cost of goods sold? &check;
 
-Gross Margin = Total Revenue / Gross Profit
+Gross Margin = Gross Profit / Total Revenue
 ​
 Score 1 if current year's Gross Margin > prior year's Gross Margin, else 0.
 

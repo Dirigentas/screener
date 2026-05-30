@@ -31,7 +31,13 @@ WITH
       CASE 
         WHEN "shares count M" <= "shares count -1Y M" THEN 1 
         ELSE 0 
-      END AS dilusion
+      END AS dilusion,
+
+      -- 8. Change in Gross Margin
+      CASE 
+        WHEN "Gross Margin" > "Gross Margin -1Y" THEN 1 
+        ELSE 0 
+      END AS Δ_gross_margin
       
     FROM
       mid_stats
@@ -43,8 +49,9 @@ SELECT
   roa_change,
   earnings_quality,
   dilusion,
+  Δ_gross_margin,
   -- The last column sums up all the previous score columns
-  (score_eps + score_cfo + roa_change + earnings_quality + dilusion) AS total_piotroski_score
+  (score_eps + score_cfo + roa_change + earnings_quality + dilusion + Δ_gross_margin) AS total_piotroski_score
 FROM
   scored_data
 ORDER BY

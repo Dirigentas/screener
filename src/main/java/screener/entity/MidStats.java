@@ -46,4 +46,16 @@ public class MidStats {
 
     @Column(name = "Net Income TTM M", comment = "")
     private Double earningsTtmM;
+
+    @Column(name = "Gross Margin", comment = "Gross Margin = Total Revenue / Gross Profit")
+    private Double grossMargin;
+
+    @Column(name = "Gross Margin -1Y", comment = "Gross Margin = Total Revenue / Gross Profit")
+    private Double grossMarginPrevious;
+
+    @Column(name = "Revenue -1Y TTM M", comment = "")
+    private Double revenuePreviousTtmM;
+
+    @Column(name = "Gross Profit -1Y TTM M", comment = "")
+    private Double grossProfitPreviousTtmM;
 }

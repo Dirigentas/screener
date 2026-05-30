@@ -12,16 +12,16 @@ public class MetricPickerService {
     private static final String ALPHA_BALANCE  = "rawData/%s/alphavantage.BALANCE_SHEET.json";
     private static final String ALPHA_CASHFLOW  = "rawData/%s/alphavantage.CASH_FLOW.json";
     private static final String ALPHA_INCOME  = "rawData/%s/alphavantage.INCOME_STATEMENT.json";
-    private static final String ALPHA_OVERVIEW  = "rawData/%s/alphavantage.OVERVIEW.json";
-    private static final String FINN_ALL  = "rawData/%s/finnhub.all.json";
+    private static final String FINN_METRIC  = "rawData/%s/finnhub.metric.json";
+    private static final String FINN_PROFILE  = "rawData/%s/finnhub.profile2.json";
     
     public static String getCompanyName(String ticker) {
 
-        String path = String.format(ALPHA_OVERVIEW, ticker);
+        String path = String.format(FINN_PROFILE, ticker);
         JsonNode json = JsonFileReader.read(path);
 
         String metric = json
-                .get("Name")
+                .get("name")
                 .asString();
 
         return metric;
@@ -29,7 +29,7 @@ public class MetricPickerService {
 
     public static double getPe(String ticker) {
 
-        String path = String.format(FINN_ALL, ticker);
+        String path = String.format(FINN_METRIC, ticker);
         JsonNode json = JsonFileReader.read(path);
         JsonNode node = json
                 .get("metric")
@@ -88,7 +88,7 @@ public class MetricPickerService {
 
     public static double getCompanyEvM(String ticker) {
 
-        String path = String.format(FINN_ALL, ticker);
+        String path = String.format(FINN_METRIC, ticker);
         JsonNode json = JsonFileReader.read(path);
 
         double metric = json
@@ -101,7 +101,7 @@ public class MetricPickerService {
 
     public static double getEpsTtm(String ticker) {
 
-        String path = String.format(FINN_ALL, ticker);
+        String path = String.format(FINN_METRIC, ticker);
         JsonNode json = JsonFileReader.read(path);
 
         double metric = json
@@ -112,9 +112,56 @@ public class MetricPickerService {
         return (double) Math.round(metric * 100) / 100;
     }
 
+    public static double getGrossMargin(String ticker) {
+
+        String path = String.format(FINN_METRIC, ticker);
+        JsonNode json = JsonFileReader.read(path);
+
+        double metric = json
+                .get("metric")
+                .get("grossMarginTTM")
+                .asDouble();
+
+        return (double) Math.round(metric * 100) / 100;
+    }
+
+    public static double getRevenuePreviousTtmM(String ticker) {
+
+        String path = String.format(ALPHA_INCOME, ticker);
+        JsonNode json = JsonFileReader.read(path);
+        double metric = 0;
+        
+        for (int i = 4; i < 8; i++) {
+            JsonNode node = json
+                .get("quarterlyReports")
+                .get(i)
+                .get("totalRevenue");
+
+                metric += (node.isNull() || node.asString().equals("None")) ? 0 : node.asDouble();
+        }
+        return (double) Math.round(metric / MILLION * 100) / 100;
+    }
+
+    public static double getGrossProfitPreviousTtmM(String ticker) {
+
+        String path = String.format(ALPHA_INCOME, ticker);
+        JsonNode json = JsonFileReader.read(path);
+        double metric = 0;
+        
+        for (int i = 4; i < 8; i++) {
+            JsonNode node = json
+                .get("quarterlyReports")
+                .get(i)
+                .get("grossProfit");
+
+                metric += (node.isNull() || node.asString().equals("None")) ? 0 : node.asDouble();
+        }
+        return (double) Math.round(metric / MILLION * 10) / 10;
+    }
+
     public static double getRoaTtm(String ticker) {
 
-        String path = String.format(FINN_ALL, ticker);
+        String path = String.format(FINN_METRIC, ticker);
         JsonNode json = JsonFileReader.read(path);
 
         double metric = json
@@ -125,14 +172,12 @@ public class MetricPickerService {
                 .get("v")
                 .asDouble();
 
-        System.out.println("TEST: " + metric);
-
         return metric;
     }
 
     public static double getRoaPreviousTtm(String ticker) {
 
-        String path = String.format(FINN_ALL, ticker);
+        String path = String.format(FINN_METRIC, ticker);
         JsonNode json = JsonFileReader.read(path);
 
         double metric = json
@@ -148,7 +193,7 @@ public class MetricPickerService {
     
     public static double getFinnhubEbitM(String ticker) {
 
-        String path1 = String.format(FINN_ALL, ticker);
+        String path1 = String.format(FINN_METRIC, ticker);
         JsonNode json1 = JsonFileReader.read(path1);
 
         double ebitPerShare = 0;

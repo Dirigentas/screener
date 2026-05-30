@@ -73,12 +73,16 @@ public class ScreenerApplication {
                 double roaTtm = MetricPickerService.getRoaTtm(ticker);
                 double roaPreviousTtm = MetricPickerService.getRoaPreviousTtm(ticker);
                 double earningsTtmM = MetricPickerService.getEarningsTtmM(ticker);
+                double grossMargin = MetricPickerService.getGrossMargin(ticker);
+                double revenuePreviousTtmM = MetricPickerService.getRevenuePreviousTtmM(ticker);
+                double grossProfitPreviousTtmM = MetricPickerService.getGrossProfitPreviousTtmM(ticker);
                 
-
+                
                 // calculations
                 double averageEbitM = (double) Math.round((ebitAlphM + ebitFinnM) / 2 * 10) / 10;
                 double earningsYield = (double) Math.round(averageEbitM / evM * 100 * 10) / 10;
                 double returnOnCapital = (double) Math.round(averageEbitM / (workingCapitalM + fixedAssetsM)* 100 * 10) / 10;
+                double grossMarginPrevious = (double) Math.round(grossProfitPreviousTtmM / revenuePreviousTtmM * 10000) / 100;
 
                 // mid_stats DB table
                 MidStats midStats = new MidStats();
@@ -95,6 +99,10 @@ public class ScreenerApplication {
                 midStats.setRoaTtm(roaTtm);
                 midStats.setRoaPreviousTtm(roaPreviousTtm);
                 midStats.setEarningsTtmM(earningsTtmM);
+                midStats.setGrossMargin(grossMargin);
+                midStats.setGrossMarginPrevious(grossMarginPrevious);
+                midStats.setRevenuePreviousTtmM(revenuePreviousTtmM);
+                midStats.setGrossProfitPreviousTtmM(grossProfitPreviousTtmM);
                 
                 // magic_formula DB table
                 MagicFormula magicFormula = new MagicFormula();

@@ -1,10 +1,5 @@
 ## Roudmap
-  - sumažinti vienu alphavantege call (panaikinti ALPHA_OVERVIEW)
-    * /stock/profile2?symbol=AAPL finnhub
-    * /stock/financials-reported?symbol=AAPL&freq=quarterly finnhub
-    * /stock/insider-transactions?symbol=TSLA&limit=20 finnhub
-    * /stock/insider-sentiment?symbol=TSLA&from=2015-01-01&to=2022-03-01 finnhub
-
+  - make that only the first time finnhub profile2 would be called
   - piotrovski score metrics (done: 4 from 9)
   - all Rule1 metrics
   - all TenCap metrics
