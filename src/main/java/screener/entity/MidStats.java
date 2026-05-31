@@ -58,4 +58,10 @@ public class MidStats {
 
     @Column(name = "Gross Profit -1Y TTM M", comment = "")
     private Double grossProfitPreviousTtmM;
+
+    @Column(name = "Current ratio", comment = "")
+    private Double currentRatio;
+
+    @Column(name = "Current ratio -1Y", comment = "")
+    private Double currentRatioPrevious;
 }

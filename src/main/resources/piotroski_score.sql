@@ -27,6 +27,12 @@ WITH
         ELSE 0 
       END AS earnings_quality,
 
+      -- 6. Change in Liquidity
+      CASE 
+        WHEN "Current ratio" > "Current ratio -1Y" THEN 1 
+        ELSE 0 
+      END AS Δ_liquidity,
+
       -- 7. Change in shares count
       CASE 
         WHEN "shares count M" <= "shares count -1Y M" THEN 1 
@@ -48,11 +54,12 @@ SELECT
   score_cfo,
   roa_change,
   earnings_quality,
+  Δ_liquidity,
   dilusion,
   Δ_gross_margin,
   -- The last column sums up all the previous score columns
-  (score_eps + score_cfo + roa_change + earnings_quality + dilusion + Δ_gross_margin) AS total_piotroski_score
+  (score_eps + score_cfo + roa_change + earnings_quality + Δ_liquidity + dilusion + Δ_gross_margin) AS total_score
 FROM
   scored_data
 ORDER BY
-  total_piotroski_score DESC;
+  total_score DESC;

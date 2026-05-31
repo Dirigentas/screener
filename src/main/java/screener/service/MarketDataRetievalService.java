@@ -47,6 +47,7 @@ public class MarketDataRetievalService {
         ArrayList<String> endpoints = new ArrayList<>();
         endpoints.add("finnhub.metric.all");
         // endpoints.add("finnhub.profile2");
+        
         // endpoints.add("finnhub.financials-reported");
         // endpoints.add("finnhub.insider-transactions");
         // endpoints.add("finnhub.insider-sentiment");

@@ -76,6 +76,8 @@ public class ScreenerApplication {
                 double grossMargin = MetricPickerService.getGrossMargin(ticker);
                 double revenuePreviousTtmM = MetricPickerService.getRevenuePreviousTtmM(ticker);
                 double grossProfitPreviousTtmM = MetricPickerService.getGrossProfitPreviousTtmM(ticker);
+                double currentRatio = MetricPickerService.getCurrentRatio(ticker);
+                double currentRatioPrevious = MetricPickerService.getCurrentRatioPrevious(ticker);
                 
                 
                 // calculations
@@ -103,6 +105,8 @@ public class ScreenerApplication {
                 midStats.setGrossMarginPrevious(grossMarginPrevious);
                 midStats.setRevenuePreviousTtmM(revenuePreviousTtmM);
                 midStats.setGrossProfitPreviousTtmM(grossProfitPreviousTtmM);
+                midStats.setCurrentRatio(currentRatio);
+                midStats.setCurrentRatioPrevious(currentRatioPrevious);
                 
                 // magic_formula DB table
                 MagicFormula magicFormula = new MagicFormula();

@@ -39,7 +39,7 @@ Score 1 if current year's leverage ratio is lower than the prior year's, else 0.
 
 6. Change in Liquidity (ΔLIQUID): Is the company improving its ability to cover short-term obligations?
 
-Current Ratio = Current Liabilities / Current Assets
+Current Ratio = Current Assets / Current Liabilities
 ​
 Score 1 if current year's Current Ratio > prior year's Current Ratio, else 0.
 
@@ -47,6 +47,7 @@ Score 1 if current year's Current Ratio > prior year's Current Ratio, else 0.
 7. Change in Shares in Issue (Dilution): Is the company raising emergency capital by printing more stock? &check;
 
 Score 1 if the current number of outstanding shares is ≤ the prior year's outstanding shares (meaning no dilution), else 0.
+
 
 ### Operating Efficiency (2 Points)
 These metrics measure how well the company is squeezing value out of its operations.

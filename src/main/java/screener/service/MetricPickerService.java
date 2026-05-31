@@ -86,6 +86,60 @@ public class MetricPickerService {
         return (double) Math.round(metric / MILLION * 10) / 10;
     }
 
+    public static double getCurrentRatio(String ticker) {
+
+        String path = String.format(ALPHA_BALANCE, ticker);
+        JsonNode json = JsonFileReader.read(path);
+        double assets = 0;
+        double liabilities = 0;
+        
+        for (int i = 0; i < 4; i++) {
+            JsonNode node = json
+                .get("quarterlyReports")
+                .get(i)
+                .get("totalCurrentAssets");
+
+                assets += (node.isNull() || node.asString().equals("None")) ? 0 : node.asDouble();
+        }
+
+        for (int i = 0; i < 4; i++) {
+            JsonNode node = json
+                .get("quarterlyReports")
+                .get(i)
+                .get("totalCurrentLiabilities");
+
+                liabilities += (node.isNull() || node.asString().equals("None")) ? 0 : node.asDouble();
+        }
+        return (double) Math.round(assets / liabilities * 100) / 100;
+    }
+
+    public static double getCurrentRatioPrevious(String ticker) {
+
+        String path = String.format(ALPHA_BALANCE, ticker);
+        JsonNode json = JsonFileReader.read(path);
+        double assets = 0;
+        double liabilities = 0;
+        
+        for (int i = 4; i < 8; i++) {
+            JsonNode node = json
+                .get("quarterlyReports")
+                .get(i)
+                .get("totalCurrentAssets");
+
+                assets += (node.isNull() || node.asString().equals("None")) ? 0 : node.asDouble();
+        }
+
+        for (int i = 4; i < 8; i++) {
+            JsonNode node = json
+                .get("quarterlyReports")
+                .get(i)
+                .get("totalCurrentLiabilities");
+
+                liabilities += (node.isNull() || node.asString().equals("None")) ? 0 : node.asDouble();
+        }
+        return (double) Math.round(assets / liabilities * 100) / 100;
+    }
+
     public static double getCompanyEvM(String ticker) {
 
         String path = String.format(FINN_METRIC, ticker);
