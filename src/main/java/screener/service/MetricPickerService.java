@@ -40,6 +40,36 @@ public class MetricPickerService {
         return (double) Math.round(metric * 10) / 10;
     }
 
+    public static double getTotalAssetsAtStartM(String ticker) {
+
+        String path = String.format(ALPHA_BALANCE, ticker);
+        JsonNode json = JsonFileReader.read(path);
+
+        JsonNode node = json
+                .get("quarterlyReports")
+                .get(4)
+                .get("totalAssets");
+
+        double metric = (node.isNull() || node.asString().equals("None")) ? 0 : node.asDouble();
+
+        return (double) Math.round(metric / MILLION * 10) / 10;
+    }
+
+    public static double getTotalAssetsAtStartPreviousM(String ticker) {
+
+        String path = String.format(ALPHA_BALANCE, ticker);
+        JsonNode json = JsonFileReader.read(path);
+
+        JsonNode node = json
+                .get("quarterlyReports")
+                .get(8)
+                .get("totalAssets");
+
+        double metric = (node.isNull() || node.asString().equals("None")) ? 0 : node.asDouble();
+
+        return (double) Math.round(metric / MILLION * 10) / 10;
+    }
+
     public static String getLatestQuarter(String ticker) {
 
         String path = String.format(ALPHA_BALANCE, ticker);
@@ -58,14 +88,13 @@ public class MetricPickerService {
 
         String path = String.format(ALPHA_BALANCE, ticker);
         JsonNode json = JsonFileReader.read(path);
-        double metric = 0;
 
         JsonNode node = json
                 .get("quarterlyReports")
                 .get(4)
                 .get("commonStockSharesOutstanding");
 
-        metric += (node.isNull() || node.asString().equals("None")) ? 0 : node.asDouble();
+        double metric = (node.isNull() || node.asString().equals("None")) ? 0 : node.asDouble();
 
         return (double) Math.round(metric / MILLION * 10) / 10;
     }
@@ -74,14 +103,13 @@ public class MetricPickerService {
 
         String path = String.format(ALPHA_BALANCE, ticker);
         JsonNode json = JsonFileReader.read(path);
-        double metric = 0;
 
         JsonNode node = json
                 .get("quarterlyReports")
                 .get(0)
                 .get("commonStockSharesOutstanding");
 
-        metric += (node.isNull() || node.asString().equals("None")) ? 0 : node.asDouble();
+        double metric = (node.isNull() || node.asString().equals("None")) ? 0 : node.asDouble();
 
         return (double) Math.round(metric / MILLION * 10) / 10;
     }
@@ -186,6 +214,23 @@ public class MetricPickerService {
         double metric = 0;
         
         for (int i = 4; i < 8; i++) {
+            JsonNode node = json
+                .get("quarterlyReports")
+                .get(i)
+                .get("totalRevenue");
+
+                metric += (node.isNull() || node.asString().equals("None")) ? 0 : node.asDouble();
+        }
+        return (double) Math.round(metric / MILLION * 100) / 100;
+    }
+
+    public static double getRevenueTtmM(String ticker) {
+
+        String path = String.format(ALPHA_INCOME, ticker);
+        JsonNode json = JsonFileReader.read(path);
+        double metric = 0;
+        
+        for (int i = 0; i < 4; i++) {
             JsonNode node = json
                 .get("quarterlyReports")
                 .get(i)

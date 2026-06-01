@@ -74,10 +74,13 @@ public class ScreenerApplication {
                 double roaPreviousTtm = MetricPickerService.getRoaPreviousTtm(ticker);
                 double earningsTtmM = MetricPickerService.getEarningsTtmM(ticker);
                 double grossMargin = MetricPickerService.getGrossMargin(ticker);
+                double revenueTtmM = MetricPickerService.getRevenueTtmM(ticker);
                 double revenuePreviousTtmM = MetricPickerService.getRevenuePreviousTtmM(ticker);
                 double grossProfitPreviousTtmM = MetricPickerService.getGrossProfitPreviousTtmM(ticker);
                 double currentRatio = MetricPickerService.getCurrentRatio(ticker);
                 double currentRatioPrevious = MetricPickerService.getCurrentRatioPrevious(ticker);
+                double totalAssetsAtStartM = MetricPickerService.getTotalAssetsAtStartM(ticker);
+                double totalAssetsAtStartPriorM = MetricPickerService.getTotalAssetsAtStartPreviousM(ticker);
                 
                 
                 // calculations
@@ -85,6 +88,8 @@ public class ScreenerApplication {
                 double earningsYield = (double) Math.round(averageEbitM / evM * 100 * 10) / 10;
                 double returnOnCapital = (double) Math.round(averageEbitM / (workingCapitalM + fixedAssetsM)* 100 * 10) / 10;
                 double grossMarginPrevious = (double) Math.round(grossProfitPreviousTtmM / revenuePreviousTtmM * 10000) / 100;
+                double assetTurnover = (double) Math.round(revenueTtmM / totalAssetsAtStartM * 100) / 100;
+                double assetTurnoverPrior = (double) Math.round(revenuePreviousTtmM / totalAssetsAtStartPriorM * 100) / 100;
 
                 // mid_stats DB table
                 MidStats midStats = new MidStats();
@@ -103,10 +108,13 @@ public class ScreenerApplication {
                 midStats.setEarningsTtmM(earningsTtmM);
                 midStats.setGrossMargin(grossMargin);
                 midStats.setGrossMarginPrevious(grossMarginPrevious);
+                midStats.setRevenueTtmM(revenueTtmM);
                 midStats.setRevenuePreviousTtmM(revenuePreviousTtmM);
                 midStats.setGrossProfitPreviousTtmM(grossProfitPreviousTtmM);
                 midStats.setCurrentRatio(currentRatio);
                 midStats.setCurrentRatioPrevious(currentRatioPrevious);
+                midStats.setAssetTurnover(assetTurnover);
+                midStats.setAssetTurnoverPrior(assetTurnoverPrior);
                 
                 // magic_formula DB table
                 MagicFormula magicFormula = new MagicFormula();

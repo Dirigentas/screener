@@ -53,6 +53,9 @@ public class MidStats {
     @Column(name = "Gross Margin -1Y", comment = "Gross Margin = Total Revenue / Gross Profit")
     private Double grossMarginPrevious;
 
+    @Column(name = "Revenue TTM M", comment = "")
+    private Double revenueTtmM;
+
     @Column(name = "Revenue -1Y TTM M", comment = "")
     private Double revenuePreviousTtmM;
 
@@ -64,4 +67,10 @@ public class MidStats {
 
     @Column(name = "Current ratio -1Y", comment = "")
     private Double currentRatioPrevious;
+
+    @Column(name = "Asset Turnover", comment = "Total Revenue / Total Assets at Beginning of Year")
+    private Double assetTurnover;
+
+    @Column(name = "Asset Turnover -1Y", comment = "Prior Total Revenue / Prior Total Assets at Beginning of Year ")
+    private Double assetTurnoverPrior;
 }

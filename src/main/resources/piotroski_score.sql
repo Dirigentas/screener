@@ -43,13 +43,20 @@ WITH
       CASE 
         WHEN "Gross Margin" > "Gross Margin -1Y" THEN 1 
         ELSE 0 
-      END AS Δ_gross_margin
+      END AS Δ_gross_margin,
+
+      -- 9. Change in Gross Margin
+      CASE 
+        WHEN "Asset Turnover" > "Asset Turnover -1Y" THEN 1 
+        ELSE 0 
+      END AS Δ_Asset_Turnover
       
     FROM
       mid_stats
   )
 SELECT
   ticker,
+  (score_eps + score_cfo + roa_change + earnings_quality + Δ_liquidity + dilusion + Δ_gross_margin + Δ_Asset_Turnover) AS total_score,
   score_eps,
   score_cfo,
   roa_change,
@@ -57,8 +64,8 @@ SELECT
   Δ_liquidity,
   dilusion,
   Δ_gross_margin,
-  -- The last column sums up all the previous score columns
-  (score_eps + score_cfo + roa_change + earnings_quality + Δ_liquidity + dilusion + Δ_gross_margin) AS total_score
+  Δ_Asset_Turnover
+  
 FROM
   scored_data
 ORDER BY

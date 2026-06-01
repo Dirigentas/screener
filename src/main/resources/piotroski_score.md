@@ -37,7 +37,7 @@ Leverage = Average Total Assets / Long-Term Debt
 Score 1 if current year's leverage ratio is lower than the prior year's, else 0.
 
 
-6. Change in Liquidity (ΔLIQUID): Is the company improving its ability to cover short-term obligations?
+6. Change in Liquidity (ΔLIQUID): Is the company improving its ability to cover short-term obligations? &check;
 
 Current Ratio = Current Assets / Current Liabilities
 ​
@@ -59,9 +59,9 @@ Gross Margin = Gross Profit / Total Revenue
 Score 1 if current year's Gross Margin > prior year's Gross Margin, else 0.
 
 
-9. Change in Asset Turnover (ΔTURN): Is the company generating more sales per dollar of assets?
+9. Change in Asset Turnover (ΔTURN): Is the company generating more sales per dollar of assets? &check;
 
-Asset Turnover = Total Assets at Beginning of Year / Total Revenue
+Asset Turnover = Total Revenue / Total Assets at Beginning of Year
 ​
 Score 1 if current year's Asset Turnover > prior year's Asset Turnover, else 0.
 
