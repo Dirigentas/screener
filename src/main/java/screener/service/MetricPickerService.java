@@ -32,8 +32,8 @@ public class MetricPickerService {
         String path = String.format(FINN_METRIC, ticker);
         JsonNode json = JsonFileReader.read(path);
         JsonNode node = json
-                .get("metric")
-                .get("peTTM");
+            .get("metric")
+            .get("peTTM");
 
         double metric = (node.isNull() || node.asString().equals("None")) ? 0 : node.asDouble();
 
@@ -228,9 +228,9 @@ public class MetricPickerService {
         JsonNode json = JsonFileReader.read(path);
 
         double metric = json
-                .get("metric")
-                .get("enterpriseValue")
-                .asDouble();
+            .get("metric")
+            .get("enterpriseValue")
+            .asDouble();
 
         return (double) Math.round(metric);
     }
@@ -241,9 +241,9 @@ public class MetricPickerService {
         JsonNode json = JsonFileReader.read(path);
 
         double metric = json
-                .get("metric")
-                .get("epsTTM")
-                .asDouble();
+            .get("metric")
+            .get("epsTTM")
+            .asDouble();
 
         return (double) Math.round(metric * 100) / 100;
     }
@@ -322,12 +322,12 @@ public class MetricPickerService {
         JsonNode json = JsonFileReader.read(path);
 
         double metric = json
-                .get("series")
-                .get("quarterly")
-                .get("roaTTM")
-                .get(0)
-                .get("v")
-                .asDouble();
+            .get("series")
+            .get("quarterly")
+            .get("roaTTM")
+            .get(0)
+            .get("v")
+            .asDouble();
 
         return metric;
     }
@@ -338,12 +338,12 @@ public class MetricPickerService {
         JsonNode json = JsonFileReader.read(path);
 
         double metric = json
-                .get("series")
-                .get("quarterly")
-                .get("roaTTM")
-                .get(2)
-                .get("v")
-                .asDouble();
+            .get("series")
+            .get("quarterly")
+            .get("roaTTM")
+            .get(2)
+            .get("v")
+            .asDouble();
 
         return metric;
     }
