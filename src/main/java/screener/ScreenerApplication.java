@@ -60,7 +60,7 @@ public class ScreenerApplication {
                 // pick from json
                 String name = MetricPickerService.getCompanyName(ticker);
                 double sharesCountM = MetricPickerService.getSharesCountM(ticker);
-                double sharesCountPreviousM = MetricPickerService.getSharesCountPreviousM(ticker);
+                double sharesCountPriorM = MetricPickerService.getSharesCountPriorM(ticker);
                 String latestQuarter = MetricPickerService.getLatestQuarter(ticker);
                 double evM = MetricPickerService.getCompanyEvM(ticker);
                 double eps = MetricPickerService.getEpsTtm(ticker);
@@ -71,25 +71,31 @@ public class ScreenerApplication {
                 double fixedAssetsM = MetricPickerService.getFixedAssetsM(ticker);
                 double cashFlowOperationsTtmM = MetricPickerService.getCashFlowOperationsTtmM(ticker);
                 double roaTtm = MetricPickerService.getRoaTtm(ticker);
-                double roaPreviousTtm = MetricPickerService.getRoaPreviousTtm(ticker);
+                double roaPriorTtm = MetricPickerService.getRoaPriorTtm(ticker);
                 double earningsTtmM = MetricPickerService.getEarningsTtmM(ticker);
                 double grossMargin = MetricPickerService.getGrossMargin(ticker);
                 double revenueTtmM = MetricPickerService.getRevenueTtmM(ticker);
-                double revenuePreviousTtmM = MetricPickerService.getRevenuePreviousTtmM(ticker);
-                double grossProfitPreviousTtmM = MetricPickerService.getGrossProfitPreviousTtmM(ticker);
+                double revenuePriorTtmM = MetricPickerService.getRevenuePriorTtmM(ticker);
+                double grossProfitPriorTtmM = MetricPickerService.getGrossProfitPriorTtmM(ticker);
                 double currentRatio = MetricPickerService.getCurrentRatio(ticker);
-                double currentRatioPrevious = MetricPickerService.getCurrentRatioPrevious(ticker);
+                double currentRatioPrior = MetricPickerService.getCurrentRatioPrior(ticker);
                 double totalAssetsAtStartM = MetricPickerService.getTotalAssetsAtStartM(ticker);
-                double totalAssetsAtStartPriorM = MetricPickerService.getTotalAssetsAtStartPreviousM(ticker);
+                double totalAssetsAtStartPriorM = MetricPickerService.getTotalAssetsAtStartPriorM(ticker);
+                double longTermDebtM = MetricPickerService.getLongTermDebtM(ticker);
+                double longTermDebtPriorM = MetricPickerService.getLongTermDebtPriorM(ticker);
+                double averageTotalAssetsM = MetricPickerService.getAverageTotalAssetsM(ticker);
+                double averageTotalAssetsPriorM = MetricPickerService.getAverageTotalAssetsPriorM(ticker);
                 
                 
                 // calculations
                 double averageEbitM = (double) Math.round((ebitAlphM + ebitFinnM) / 2 * 10) / 10;
                 double earningsYield = (double) Math.round(averageEbitM / evM * 100 * 10) / 10;
                 double returnOnCapital = (double) Math.round(averageEbitM / (workingCapitalM + fixedAssetsM)* 100 * 10) / 10;
-                double grossMarginPrevious = (double) Math.round(grossProfitPreviousTtmM / revenuePreviousTtmM * 10000) / 100;
+                double grossMarginPrior = (double) Math.round(grossProfitPriorTtmM / revenuePriorTtmM * 10000) / 100;
                 double assetTurnover = (double) Math.round(revenueTtmM / totalAssetsAtStartM * 100) / 100;
-                double assetTurnoverPrior = (double) Math.round(revenuePreviousTtmM / totalAssetsAtStartPriorM * 100) / 100;
+                double assetTurnoverPrior = (double) Math.round(revenuePriorTtmM / totalAssetsAtStartPriorM * 100) / 100;
+                double leverage = (double) Math.round(longTermDebtM / averageTotalAssetsM * 100) / 100;
+                double leveragePrior = (double) Math.round(longTermDebtPriorM / averageTotalAssetsPriorM * 100) / 100;
 
                 // mid_stats DB table
                 MidStats midStats = new MidStats();
@@ -101,20 +107,22 @@ public class ScreenerApplication {
                 midStats.setEps(eps);
                 midStats.setPe(pe);
                 midStats.setSharesCountM(sharesCountM);
-                midStats.setSharesCountPreviousM(sharesCountPreviousM);
+                midStats.setSharesCountPriorM(sharesCountPriorM);
                 midStats.setCashFlowOperationsTtmM(cashFlowOperationsTtmM);
                 midStats.setRoaTtm(roaTtm);
-                midStats.setRoaPreviousTtm(roaPreviousTtm);
+                midStats.setRoaPriorTtm(roaPriorTtm);
                 midStats.setEarningsTtmM(earningsTtmM);
                 midStats.setGrossMargin(grossMargin);
-                midStats.setGrossMarginPrevious(grossMarginPrevious);
+                midStats.setGrossMarginPrior(grossMarginPrior);
                 midStats.setRevenueTtmM(revenueTtmM);
-                midStats.setRevenuePreviousTtmM(revenuePreviousTtmM);
-                midStats.setGrossProfitPreviousTtmM(grossProfitPreviousTtmM);
+                midStats.setRevenuePriorTtmM(revenuePriorTtmM);
+                midStats.setGrossProfitPriorTtmM(grossProfitPriorTtmM);
                 midStats.setCurrentRatio(currentRatio);
-                midStats.setCurrentRatioPrevious(currentRatioPrevious);
+                midStats.setCurrentRatioPrior(currentRatioPrior);
                 midStats.setAssetTurnover(assetTurnover);
                 midStats.setAssetTurnoverPrior(assetTurnoverPrior);
+                midStats.setLeverage(leverage);
+                midStats.setLeveragePrior(leveragePrior);
                 
                 // magic_formula DB table
                 MagicFormula magicFormula = new MagicFormula();

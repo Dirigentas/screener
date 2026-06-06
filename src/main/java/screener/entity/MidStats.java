@@ -33,7 +33,7 @@ public class MidStats {
     private Double sharesCountM;
 
     @Column(name = "shares count -1Y M", comment = "")
-    private Double sharesCountPreviousM;
+    private Double sharesCountPriorM;
 
     @Column(name = "CFO ttm M", comment = "Trailing twelve months cash flow from operations in millions")
     private Double cashFlowOperationsTtmM;
@@ -41,8 +41,8 @@ public class MidStats {
     @Column(name = "ROA TTM", comment = "Trailing twelve months return on assets")
     private Double roaTtm;
 
-    @Column(name = "ROA -1Y TTM", comment = "Previous year twelve months return on assets")
-    private Double roaPreviousTtm;
+    @Column(name = "ROA -1Y TTM", comment = "Prior year twelve months return on assets")
+    private Double roaPriorTtm;
 
     @Column(name = "Net Income TTM M", comment = "")
     private Double earningsTtmM;
@@ -51,26 +51,32 @@ public class MidStats {
     private Double grossMargin;
 
     @Column(name = "Gross Margin -1Y", comment = "Gross Margin = Total Revenue / Gross Profit")
-    private Double grossMarginPrevious;
+    private Double grossMarginPrior;
 
     @Column(name = "Revenue TTM M", comment = "")
     private Double revenueTtmM;
 
     @Column(name = "Revenue -1Y TTM M", comment = "")
-    private Double revenuePreviousTtmM;
+    private Double revenuePriorTtmM;
 
     @Column(name = "Gross Profit -1Y TTM M", comment = "")
-    private Double grossProfitPreviousTtmM;
+    private Double grossProfitPriorTtmM;
 
     @Column(name = "Current ratio", comment = "")
     private Double currentRatio;
 
     @Column(name = "Current ratio -1Y", comment = "")
-    private Double currentRatioPrevious;
+    private Double currentRatioPrior;
 
     @Column(name = "Asset Turnover", comment = "Total Revenue / Total Assets at Beginning of Year")
     private Double assetTurnover;
 
     @Column(name = "Asset Turnover -1Y", comment = "Prior Total Revenue / Prior Total Assets at Beginning of Year ")
     private Double assetTurnoverPrior;
+
+    @Column(name = "leverage", comment = "Leverage = Long-Term Debt / Average Total Assets")
+    private Double leverage;
+
+    @Column(name = "leverage -1", comment = "Prior Leverage = Long-Term Debt / Average Total Assets")
+    private Double leveragePrior;
 }

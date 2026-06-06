@@ -19,13 +19,19 @@ WITH
       CASE 
         WHEN "ROA TTM" > "ROA -1Y TTM" THEN 1 
         ELSE 0 
-      END AS roa_change,
+      END AS Δ_roa,
 
       -- 4. Quality of Earnings
       CASE 
         WHEN "CFO ttm M" > "Net Income TTM M" THEN 1 
         ELSE 0 
       END AS earnings_quality,
+
+      -- 5. Change in Leverage
+      CASE 
+        WHEN "leverage" >= "leverage -1" THEN 1 
+        ELSE 0 
+      END AS Δ_leverage,
 
       -- 6. Change in Liquidity
       CASE 
@@ -37,7 +43,7 @@ WITH
       CASE 
         WHEN "shares count M" <= "shares count -1Y M" THEN 1 
         ELSE 0 
-      END AS dilusion,
+      END AS Δ_dilusion,
 
       -- 8. Change in Gross Margin
       CASE 
@@ -56,13 +62,14 @@ WITH
   )
 SELECT
   ticker,
-  (score_eps + score_cfo + roa_change + earnings_quality + Δ_liquidity + dilusion + Δ_gross_margin + Δ_Asset_Turnover) AS total_score,
+  (score_eps + score_cfo + Δ_roa + earnings_quality + Δ_leverage + Δ_liquidity + Δ_dilusion + Δ_gross_margin + Δ_Asset_Turnover) AS total_score,
   score_eps,
   score_cfo,
-  roa_change,
+  Δ_roa,
   earnings_quality,
+  Δ_leverage,
   Δ_liquidity,
-  dilusion,
+  Δ_dilusion,
   Δ_gross_margin,
   Δ_Asset_Turnover
   

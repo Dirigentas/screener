@@ -17,7 +17,7 @@ CFO= Total Assets at Beginning of Year / Cash Flow from Operations
 Score 1 if CFO>0, else 0.
 
 
-3. Change in ROA (ΔROA): Is the company's profitability improving compared to last year? &check;
+3. Change in ROA (Δ ROA): Is the company's profitability improving compared to last year? &check;
 
 Score 1 if current year's ROA> prior year's ROA, else 0.
 
@@ -30,21 +30,21 @@ Score 1 if Cash Flow from Operations > Net Income, else 0.
 ### Leverage, Liquidity, and Source of Funds (3 Points)
 These metrics flag companies that are taking on too much debt, struggling to pay short-term bills, or diluting their shareholders.
 
-5. Change in Leverage (ΔLEVER): Is the company reducing its debt burden?
+5. Change in Leverage (ΔLEVER): Is the company reducing its debt burden? &check;
 
-Leverage = Average Total Assets / Long-Term Debt
+Leverage = Long-Term Debt / Average Total Assets
  
-Score 1 if current year's leverage ratio is lower than the prior year's, else 0.
+Score 1 if current year's leverage ratio is lower or equal to the prior year's, else 0.
 
 
-6. Change in Liquidity (ΔLIQUID): Is the company improving its ability to cover short-term obligations? &check;
+6. Change in Liquidity (Δ LIQUID): Is the company improving its ability to cover short-term obligations? &check;
 
 Current Ratio = Current Assets / Current Liabilities
 ​
 Score 1 if current year's Current Ratio > prior year's Current Ratio, else 0.
 
 
-7. Change in Shares in Issue (Dilution): Is the company raising emergency capital by printing more stock? &check;
+7. Change in Shares in Issue (Δ Dilution): Is the company raising emergency capital by printing more stock? &check;
 
 Score 1 if the current number of outstanding shares is ≤ the prior year's outstanding shares (meaning no dilution), else 0.
 
@@ -52,14 +52,14 @@ Score 1 if the current number of outstanding shares is ≤ the prior year's outs
 ### Operating Efficiency (2 Points)
 These metrics measure how well the company is squeezing value out of its operations.
 
-8. Change in Gross Margin (ΔMARGIN): Is the company improving its pricing power or cost of goods sold? &check;
+8. Change in Gross Margin (Δ MARGIN): Is the company improving its pricing power or cost of goods sold? &check;
 
 Gross Margin = Gross Profit / Total Revenue
 ​
 Score 1 if current year's Gross Margin > prior year's Gross Margin, else 0.
 
 
-9. Change in Asset Turnover (ΔTURN): Is the company generating more sales per dollar of assets? &check;
+9. Change in Asset Turnover (Δ TURN): Is the company generating more sales per dollar of assets? &check;
 
 Asset Turnover = Total Revenue / Total Assets at Beginning of Year
 ​

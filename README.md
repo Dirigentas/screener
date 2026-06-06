@@ -1,6 +1,6 @@
 ## Roudmap
   - make that only the first time finnhub profile2 would be called
-  - piotrovski score metrics (done: 7 from 9)
+
   - all Rule1 metrics
   - all TenCap metrics
   - all PBT metrics
@@ -24,6 +24,7 @@
 * make that "read data from json" and finhub api would be for all tickers that have files
 * make separate table for intermediate calculations (for debugging odd final metrics)
 * give a rating for magic formula companies
+* piotrovski score metrics (done: 9 from 9)
 
 
 
