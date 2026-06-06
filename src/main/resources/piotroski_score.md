@@ -1,7 +1,7 @@
 ## Piotroski score
 
 ### Profitability (4 Points)
-These metrics measure the company's ability to generate funds internally and check the quality of those earnings.
+- These metrics measure the company's ability to generate funds internally and check the quality of those earnings.
 
 1. Return on Assets (ROA): Is the company generating a profit from its assets? &check;
 
@@ -28,7 +28,7 @@ Score 1 if Cash Flow from Operations > Net Income, else 0.
 
 
 ### Leverage, Liquidity, and Source of Funds (3 Points)
-These metrics flag companies that are taking on too much debt, struggling to pay short-term bills, or diluting their shareholders.
+- These metrics flag companies that are taking on too much debt, struggling to pay short-term bills, or diluting their shareholders.
 
 5. Change in Leverage (ΔLEVER): Is the company reducing its debt burden? &check;
 
@@ -50,7 +50,7 @@ Score 1 if the current number of outstanding shares is ≤ the prior year's outs
 
 
 ### Operating Efficiency (2 Points)
-These metrics measure how well the company is squeezing value out of its operations.
+- These metrics measure how well the company is squeezing value out of its operations.
 
 8. Change in Gross Margin (Δ MARGIN): Is the company improving its pricing power or cost of goods sold? &check;
 
@@ -67,10 +67,9 @@ Score 1 if current year's Asset Turnover > prior year's Asset Turnover, else 0.
 
 
 ### Tallying the Final Score
-Once your screener runs these 9 calculations, it should sum the points for a final score between 0 and 9:
 
-8 or 9: Very strong fundamentals (these are your buy candidates).
+- 8 or 9: Very strong fundamentals (these are your buy candidates).
 
-3 to 7: Average or mixed financial health.
+- 3 to 7: Average or mixed financial health.
 
-0 to 2: Weak fundamentals and high risk of financial distress (prime candidates for shorting, according to Piotroski's original paper).
+- 0 to 2: Weak fundamentals and high risk of financial distress (prime candidates for shorting).
