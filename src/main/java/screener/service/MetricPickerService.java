@@ -46,9 +46,9 @@ public class MetricPickerService {
         JsonNode json = JsonFileReader.read(path);
 
         JsonNode node = json
-                .get("quarterlyReports")
-                .get(4)
-                .get("totalAssets");
+            .get("quarterlyReports")
+            .get(4)
+            .get("totalAssets");
 
         double metric = (node.isNull() || node.asString().equals("None")) ? 0 : node.asDouble();
 
@@ -61,9 +61,9 @@ public class MetricPickerService {
         JsonNode json = JsonFileReader.read(path);
 
         JsonNode node = json
-                .get("quarterlyReports")
-                .get(8)
-                .get("totalAssets");
+            .get("quarterlyReports")
+            .get(8)
+            .get("totalAssets");
 
         double metric = (node.isNull() || node.asString().equals("None")) ? 0 : node.asDouble();
 
@@ -76,10 +76,10 @@ public class MetricPickerService {
         JsonNode json = JsonFileReader.read(path);
 
         String metric = json
-                .get("quarterlyReports")
-                .get(0)
-                .get("fiscalDateEnding")
-                .asString();
+            .get("quarterlyReports")
+            .get(0)
+            .get("fiscalDateEnding")
+            .asString();
 
         return metric;
     }
@@ -90,9 +90,9 @@ public class MetricPickerService {
         JsonNode json = JsonFileReader.read(path);
 
         JsonNode node = json
-                .get("quarterlyReports")
-                .get(4)
-                .get("commonStockSharesOutstanding");
+            .get("quarterlyReports")
+            .get(4)
+            .get("commonStockSharesOutstanding");
 
         double metric = (node.isNull() || node.asString().equals("None")) ? 0 : node.asDouble();
 
@@ -105,9 +105,9 @@ public class MetricPickerService {
         JsonNode json = JsonFileReader.read(path);
 
         JsonNode node = json
-                .get("quarterlyReports")
-                .get(0)
-                .get("commonStockSharesOutstanding");
+            .get("quarterlyReports")
+            .get(0)
+            .get("commonStockSharesOutstanding");
 
         double metric = (node.isNull() || node.asString().equals("None")) ? 0 : node.asDouble();
 
@@ -120,9 +120,9 @@ public class MetricPickerService {
         JsonNode json = JsonFileReader.read(path);
 
         JsonNode node = json
-                .get("quarterlyReports")
-                .get(0)
-                .get("longTermDebt");
+            .get("quarterlyReports")
+            .get(0)
+            .get("longTermDebt");
 
         double metric = (node.isNull() || node.asString().equals("None")) ? 0 : node.asDouble();
 
@@ -135,9 +135,9 @@ public class MetricPickerService {
         JsonNode json = JsonFileReader.read(path);
 
         JsonNode node = json
-                .get("quarterlyReports")
-                .get(4)
-                .get("longTermDebt");
+            .get("quarterlyReports")
+            .get(4)
+            .get("longTermDebt");
 
         double metric = (node.isNull() || node.asString().equals("None")) ? 0 : node.asDouble();
 
@@ -148,26 +148,21 @@ public class MetricPickerService {
 
         String path = String.format(ALPHA_BALANCE, ticker);
         JsonNode json = JsonFileReader.read(path);
-        double assets = 0;
-        double liabilities = 0;
         
-        for (int i = 0; i < 4; i++) {
-            JsonNode node = json
-                .get("quarterlyReports")
-                .get(i)
-                .get("totalCurrentAssets");
+        JsonNode node = json
+            .get("quarterlyReports")
+            .get(0)
+            .get("totalCurrentAssets");
 
-                assets += (node.isNull() || node.asString().equals("None")) ? 0 : node.asDouble();
-        }
+        double assets = (node.isNull() || node.asString().equals("None")) ? 0 : node.asDouble();
 
-        for (int i = 0; i < 4; i++) {
-            JsonNode node = json
-                .get("quarterlyReports")
-                .get(i)
-                .get("totalCurrentLiabilities");
+        JsonNode node1 = json
+            .get("quarterlyReports")
+            .get(0)
+            .get("totalCurrentLiabilities");
 
-                liabilities += (node.isNull() || node.asString().equals("None")) ? 0 : node.asDouble();
-        }
+        double liabilities = (node1.isNull() || node1.asString().equals("None")) ? 0 : node1.asDouble();
+
         return (double) Math.round(assets / liabilities * 100) / 100;
     }
 
@@ -175,26 +170,21 @@ public class MetricPickerService {
 
         String path = String.format(ALPHA_BALANCE, ticker);
         JsonNode json = JsonFileReader.read(path);
-        double assets = 0;
-        double liabilities = 0;
         
-        for (int i = 4; i < 8; i++) {
-            JsonNode node = json
-                .get("quarterlyReports")
-                .get(i)
-                .get("totalCurrentAssets");
+        JsonNode node = json
+            .get("quarterlyReports")
+            .get(4)
+            .get("totalCurrentAssets");
 
-                assets += (node.isNull() || node.asString().equals("None")) ? 0 : node.asDouble();
-        }
+        double assets = (node.isNull() || node.asString().equals("None")) ? 0 : node.asDouble();
 
-        for (int i = 4; i < 8; i++) {
-            JsonNode node = json
-                .get("quarterlyReports")
-                .get(i)
-                .get("totalCurrentLiabilities");
+        JsonNode node1 = json
+            .get("quarterlyReports")
+            .get(4)
+            .get("totalCurrentLiabilities");
 
-                liabilities += (node.isNull() || node.asString().equals("None")) ? 0 : node.asDouble();
-        }
+        double liabilities = (node1.isNull() || node1.asString().equals("None")) ? 0 : node1.asDouble();
+
         return (double) Math.round(assets / liabilities * 100) / 100;
     }
 
@@ -258,17 +248,21 @@ public class MetricPickerService {
         return (double) Math.round(metric * 100) / 100;
     }
 
-    public static double getGrossMargin(String ticker) {
+    public static double getRevenueTtmM(String ticker) {
 
-        String path = String.format(FINN_METRIC, ticker);
+        String path = String.format(ALPHA_INCOME, ticker);
         JsonNode json = JsonFileReader.read(path);
+        double metric = 0;
+        
+        for (int i = 0; i < 4; i++) {
+            JsonNode node = json
+                .get("quarterlyReports")
+                .get(i)
+                .get("totalRevenue");
 
-        double metric = json
-                .get("metric")
-                .get("grossMarginTTM")
-                .asDouble();
-
-        return (double) Math.round(metric * 100) / 100;
+                metric += (node.isNull() || node.asString().equals("None")) ? 0 : node.asDouble();
+        }
+        return (double) Math.round(metric / MILLION * 100) / 100;
     }
 
     public static double getRevenuePriorTtmM(String ticker) {
@@ -288,7 +282,7 @@ public class MetricPickerService {
         return (double) Math.round(metric / MILLION * 100) / 100;
     }
 
-    public static double getRevenueTtmM(String ticker) {
+    public static double getGrossProfitTtmM(String ticker) {
 
         String path = String.format(ALPHA_INCOME, ticker);
         JsonNode json = JsonFileReader.read(path);
@@ -298,11 +292,11 @@ public class MetricPickerService {
             JsonNode node = json
                 .get("quarterlyReports")
                 .get(i)
-                .get("totalRevenue");
+                .get("grossProfit");
 
                 metric += (node.isNull() || node.asString().equals("None")) ? 0 : node.asDouble();
         }
-        return (double) Math.round(metric / MILLION * 100) / 100;
+        return (double) Math.round(metric / MILLION * 10) / 10;
     }
 
     public static double getGrossProfitPriorTtmM(String ticker) {
@@ -347,7 +341,7 @@ public class MetricPickerService {
                 .get("series")
                 .get("quarterly")
                 .get("roaTTM")
-                .get(4)
+                .get(2)
                 .get("v")
                 .asDouble();
 

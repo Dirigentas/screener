@@ -73,9 +73,9 @@ public class ScreenerApplication {
                 double roaTtm = MetricPickerService.getRoaTtm(ticker);
                 double roaPriorTtm = MetricPickerService.getRoaPriorTtm(ticker);
                 double earningsTtmM = MetricPickerService.getEarningsTtmM(ticker);
-                double grossMargin = MetricPickerService.getGrossMargin(ticker);
                 double revenueTtmM = MetricPickerService.getRevenueTtmM(ticker);
                 double revenuePriorTtmM = MetricPickerService.getRevenuePriorTtmM(ticker);
+                double grossProfitTtmM = MetricPickerService.getGrossProfitTtmM(ticker);
                 double grossProfitPriorTtmM = MetricPickerService.getGrossProfitPriorTtmM(ticker);
                 double currentRatio = MetricPickerService.getCurrentRatio(ticker);
                 double currentRatioPrior = MetricPickerService.getCurrentRatioPrior(ticker);
@@ -91,6 +91,7 @@ public class ScreenerApplication {
                 double averageEbitM = (double) Math.round((ebitAlphM + ebitFinnM) / 2 * 10) / 10;
                 double earningsYield = (double) Math.round(averageEbitM / evM * 100 * 10) / 10;
                 double returnOnCapital = (double) Math.round(averageEbitM / (workingCapitalM + fixedAssetsM)* 100 * 10) / 10;
+                double grossMargin = (double) Math.round(grossProfitTtmM / revenueTtmM * 10000) / 100;
                 double grossMarginPrior = (double) Math.round(grossProfitPriorTtmM / revenuePriorTtmM * 10000) / 100;
                 double assetTurnover = (double) Math.round(revenueTtmM / totalAssetsAtStartM * 100) / 100;
                 double assetTurnoverPrior = (double) Math.round(revenuePriorTtmM / totalAssetsAtStartPriorM * 100) / 100;

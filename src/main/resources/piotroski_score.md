@@ -12,14 +12,16 @@ Score 1 if ROA>0 (positive net income), else 0.
 
 2. Operating Cash Flow (CFO): Is the core business actually generating cash? &check;
 
-CFO= Total Assets at Beginning of Year / Cash Flow from Operations
+CFO = Total Assets at Beginning of Year / Cash Flow from Operations
 ​
 Score 1 if CFO>0, else 0.
 
 
 3. Change in ROA (Δ ROA): Is the company's profitability improving compared to last year? &check;
 
-Score 1 if current year's ROA> prior year's ROA, else 0.
+ROA = Net Income / Total Assets
+
+Score 1 if current year's ROA > prior year's ROA, else 0.
 
 
 4. Quality of Earnings: Checks if the earnings are backed by real cash, helping you flag aggressive accounting tricks. &check;
