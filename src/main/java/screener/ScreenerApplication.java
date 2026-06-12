@@ -10,7 +10,9 @@ import org.springframework.context.ConfigurableApplicationContext;
 
 import screener.entity.MagicFormula;
 import screener.entity.MidStats;
+import screener.entity.PiotroskiScore;
 import screener.repository.MidStatsRepository;
+import screener.repository.PiotroskiScoreRepository;
 import screener.service.MagicFormulaService;
 import screener.service.MarketDataRetievalService;
 import screener.service.MetricPickerService;
@@ -52,8 +54,9 @@ public class ScreenerApplication {
         // Start Spring context once and reuse the CompanyService for all inserts
         if (runDb == 1) {
             ConfigurableApplicationContext context = SpringApplication.run(ScreenerApplication.class, args);
-            MagicFormulaService magicFormulaService = context.getBean(MagicFormulaService.class);
             MidStatsRepository midStatsRepository = context.getBean(MidStatsRepository.class);
+            PiotroskiScoreRepository piotroskiScoreRepository = context.getBean(PiotroskiScoreRepository.class);
+            MagicFormulaService magicFormulaService = context.getBean(MagicFormulaService.class);
 
             for (String ticker : TICKERS_ALL) {
 
@@ -98,6 +101,7 @@ public class ScreenerApplication {
                 double leverage = (double) Math.round(longTermDebtM / averageTotalAssetsM * 100) / 100;
                 double leveragePrior = (double) Math.round(longTermDebtPriorM / averageTotalAssetsPriorM * 100) / 100;
 
+                
                 // mid_stats DB table
                 MidStats midStats = new MidStats();
                 midStats.setTicker(ticker);
@@ -125,6 +129,7 @@ public class ScreenerApplication {
                 midStats.setLeverage(leverage);
                 midStats.setLeveragePrior(leveragePrior);
                 
+
                 // magic_formula DB table
                 MagicFormula magicFormula = new MagicFormula();
                 magicFormula.setTicker(ticker);
@@ -134,7 +139,35 @@ public class ScreenerApplication {
                 magicFormula.setReturnOnCapital(returnOnCapital);
 
                 
+                // piotroski_score DB table
+                int roaP = roaTtm > 0 ? 1 : 0;
+                int cfoP = cashFlowOperationsTtmM > 0 ? 1 : 0;
+                int roaChangeP = roaTtm > roaPriorTtm ? 1 : 0;
+                int epsQualityP = cashFlowOperationsTtmM > earningsTtmM ? 1 : 0;
+                int leverageChangeP = leverage >= leveragePrior ? 1 : 0;
+                int liquidityChangeP = currentRatio > currentRatioPrior ? 1 : 0;
+                int dilusionChange = sharesCountM <= sharesCountPriorM ? 1 : 0;
+                int grossMarginChange = grossMargin > grossMarginPrior ? 1 : 0;
+                int assetTurnoverChange = assetTurnover > assetTurnoverPrior ? 1 : 0;
+                int totalScoreP = roaP + cfoP + roaChangeP + epsQualityP + leverageChangeP + liquidityChangeP + dilusionChange + grossMarginChange + assetTurnoverChange;
+
+                PiotroskiScore piotroskiScore = new PiotroskiScore();
+                piotroskiScore.setTicker(ticker);
+                piotroskiScore.setTotalScore(totalScoreP);
+                piotroskiScore.setRoa(roaP);
+                piotroskiScore.setCfo(cfoP);
+                piotroskiScore.setRoaChange(roaChangeP);
+                piotroskiScore.setEpsQuality(epsQualityP);
+                piotroskiScore.setLeverageChange(leverageChangeP);
+                piotroskiScore.setLiquidityChange(liquidityChangeP);
+                piotroskiScore.setDilusionChange(dilusionChange);
+                piotroskiScore.setGrossMarginChange(grossMarginChange);
+                piotroskiScore.setAssetTurnoverChange(assetTurnoverChange);
+
+
+                // saving to DB
                 midStatsRepository.save(midStats);
+                piotroskiScoreRepository.save(piotroskiScore);
                 magicFormulaService.createNewCompany(magicFormula);
             }
             // Shut down the Spring container

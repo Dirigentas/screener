@@ -1,10 +1,11 @@
 ## Roudmap
-  - make that only the first time finnhub profile2 would be called
 
   - all Rule1 metrics
   - all TenCap metrics
   - all PBT metrics
   - all 'Revolution Investing' metrics
+
+  - make that only the first time finnhub profile2 would be called
   
   - separate table for risk metrics from google sheets
 * combine some methodologies and risk metrics for unified investable metric (just a thought)
@@ -15,6 +16,7 @@
 
 ## Implemented
 
+* instead of the 'view', placed piotroski score in a separate table
 * Alpha Vantage API provider response was to call the API not more than once per second
 * date of last quater earnings used for calculations
 * delete date from file names
