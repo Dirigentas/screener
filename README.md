@@ -1,7 +1,8 @@
 ## Roudmap
 
+  - all TenCap metrics (operatingCashflowTTM and capitalExpendituresTTM)
+
   - all Rule1 metrics
-  - all TenCap metrics
   - all PBT metrics
   - all 'Revolution Investing' metrics
 

@@ -79,4 +79,7 @@ public class MidStats {
 
     @Column(name = "leverage -1", comment = "Prior Leverage = Long-Term Debt / Average Total Assets")
     private Double leveragePrior;
+
+    @Column(name = "income_tax_TTM_M", comment = "Prior Leverage = Long-Term Debt / Average Total Assets")
+    private Double incomeTaxTtmM;
 }

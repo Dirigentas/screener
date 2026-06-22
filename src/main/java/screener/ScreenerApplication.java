@@ -88,6 +88,7 @@ public class ScreenerApplication {
                 double longTermDebtPriorM = MetricPickerService.getLongTermDebtPriorM(ticker);
                 double averageTotalAssetsM = MetricPickerService.getAverageTotalAssetsM(ticker);
                 double averageTotalAssetsPriorM = MetricPickerService.getAverageTotalAssetsPriorM(ticker);
+                double incomeTaxTtmM = MetricPickerService.getIncomeTaxTtmM(ticker);
                 
                 
                 // calculations
@@ -128,6 +129,7 @@ public class ScreenerApplication {
                 midStats.setAssetTurnoverPrior(assetTurnoverPrior);
                 midStats.setLeverage(leverage);
                 midStats.setLeveragePrior(leveragePrior);
+                midStats.setIncomeTaxTtmM(incomeTaxTtmM);
                 
 
                 // magic_formula DB table
