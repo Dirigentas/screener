@@ -503,4 +503,21 @@ public class MetricPickerService {
         }
         return (double) Math.round(metric / MILLION * 10) / 10;
     }
+
+    public static double getCapitalExpendituresTtmM(String ticker) {
+
+        String path = String.format(ALPHA_CASHFLOW, ticker);
+        JsonNode json = JsonFileReader.read(path);
+        double metric = 0;
+        
+        for (int i = 0; i < 4; i++) {
+            JsonNode node = json
+                .get("quarterlyReports")
+                .get(i)
+                .get("capitalExpenditures");
+
+                metric += (node.isNull() || node.asString().equals("None")) ? 0 : node.asDouble();
+        }
+        return (double) Math.round(metric / MILLION * 10) / 10;
+    }
 }

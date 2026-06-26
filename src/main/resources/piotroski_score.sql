@@ -1,3 +1,4 @@
+-- purpose: to make table columns order as I want
 CREATE TABLE piotroski_score (
     ticker VARCHAR(255) PRIMARY KEY,
     total_score INT,

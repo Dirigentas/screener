@@ -73,6 +73,7 @@ public class ScreenerApplication {
                 double workingCapitalM = MetricPickerService.getWorkingCapitalM(ticker);
                 double fixedAssetsM = MetricPickerService.getFixedAssetsM(ticker);
                 double cashFlowOperationsTtmM = MetricPickerService.getCashFlowOperationsTtmM(ticker);
+                double capitalExpendituresTtmM = MetricPickerService.getCapitalExpendituresTtmM(ticker);
                 double roaTtm = MetricPickerService.getRoaTtm(ticker);
                 double roaPriorTtm = MetricPickerService.getRoaPriorTtm(ticker);
                 double earningsTtmM = MetricPickerService.getEarningsTtmM(ticker);
@@ -115,6 +116,7 @@ public class ScreenerApplication {
                 midStats.setSharesCountM(sharesCountM);
                 midStats.setSharesCountPriorM(sharesCountPriorM);
                 midStats.setCashFlowOperationsTtmM(cashFlowOperationsTtmM);
+                midStats.setCapitalExpendituresTtmM(capitalExpendituresTtmM);
                 midStats.setRoaTtm(roaTtm);
                 midStats.setRoaPriorTtm(roaPriorTtm);
                 midStats.setEarningsTtmM(earningsTtmM);
@@ -135,8 +137,7 @@ public class ScreenerApplication {
                 // magic_formula DB table
                 MagicFormula magicFormula = new MagicFormula();
                 magicFormula.setTicker(ticker);
-                magicFormula.setAName(name);
-                magicFormula.setZLatestQuarter(latestQuarter);
+                magicFormula.setLatestQuarter(latestQuarter);
                 magicFormula.setEarningsYield(earningsYield);
                 magicFormula.setReturnOnCapital(returnOnCapital);
 
@@ -171,6 +172,7 @@ public class ScreenerApplication {
                 midStatsRepository.save(midStats);
                 piotroskiScoreRepository.save(piotroskiScore);
                 magicFormulaService.createNewCompany(magicFormula);
+                magicFormulaService.calculateAndSaveRanks();
             }
             // Shut down the Spring container
             context.close();

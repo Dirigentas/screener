@@ -1,6 +1,10 @@
 package screener.service;
 
+import java.util.Comparator;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import screener.entity.MagicFormula;
 import screener.repository.MagicFormulaRepository;
@@ -28,5 +32,43 @@ public class MagicFormulaService {
         
         // 3. Return the saved object
         return savedMagicFormula;
+    }
+
+    @Transactional
+    public void calculateAndSaveRanks() {
+        List<MagicFormula> formulas = magicFormulaRepository.findAll();
+
+        if (formulas.isEmpty()) {
+            return;
+        }
+
+        // 1. Calculate Earnings Yield Rank (Descending)
+        formulas.sort(Comparator.comparing(
+                MagicFormula::getEarningsYield, 
+                Comparator.nullsLast(Comparator.reverseOrder())
+        ));
+        for (int i = 0; i < formulas.size(); i++) {
+            formulas.get(i).setYieldRank(i + 1);
+        }
+
+        // 2. Calculate Return on Capital Rank (Descending)
+        formulas.sort(Comparator.comparing(
+                MagicFormula::getReturnOnCapital, 
+                Comparator.nullsLast(Comparator.reverseOrder())
+        ));
+        for (int i = 0; i < formulas.size(); i++) {
+            formulas.get(i).setRocRank(i + 1);
+        }
+
+        // 3. Calculate Combined Magic Formula Rank
+        for (MagicFormula formula : formulas) {
+            int yieldRank = formula.getYieldRank() != null ? formula.getYieldRank() : 0;
+            int rocRank = formula.getRocRank() != null ? formula.getRocRank() : 0;
+            
+            formula.setMagicFormulaRank(yieldRank + rocRank);
+        }
+
+        // 4. Batch Save
+        magicFormulaRepository.saveAll(formulas);
     }
 }
