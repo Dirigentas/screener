@@ -1,6 +1,6 @@
 ## Roudmap
+    - correct the copying of magic formmula rank to rankings table
 
-  - all TenCap metrics (operatingCashflowTTM and capitalExpendituresTTM)
 
   - all Rule1 metrics
   - all PBT metrics
@@ -28,6 +28,7 @@
 * make separate table for intermediate calculations (for debugging odd final metrics)
 * give a rating for magic formula companies
 * piotrovski score metrics (done: 9 from 9)
+* all TenCap metrics
 
 
 
