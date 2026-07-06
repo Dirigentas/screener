@@ -103,7 +103,6 @@ public class MetricPickerService {
 
         String path = String.format(ALPHA_BALANCE, ticker);
         JsonNode json = JsonFileReader.read(path);
-
         JsonNode node = json
             .get("quarterlyReports")
             .get(0)

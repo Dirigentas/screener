@@ -19,9 +19,13 @@ public interface RankingsRepository extends JpaRepository<Rankings, String> {
     // Spring will automatically create the query: SELECT * FROM companies WHERE name = ?
     // Company findByName(String name);
 
-    // @Modifying
-    // @Query("INSERT INTO Rankings (ticker, magic_formula_rank) " +
-    //        "SELECT m.ticker, m.magic_formula_rank FROM MagicFormula m")
-    // void copyFromMagicFormula();
-    
+    @Modifying
+    @Query(value = """
+        INSERT INTO rankings (ticker, magic_formula_rank) 
+        SELECT m.ticker, m.magic_formula_rank 
+        FROM magic_formula m
+        ON CONFLICT (ticker) 
+        DO UPDATE SET magic_formula_rank = EXCLUDED.magic_formula_rank
+        """, nativeQuery = true)
+    void upsertFromMagicFormula();
 }

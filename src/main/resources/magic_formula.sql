@@ -5,8 +5,7 @@ CREATE TABLE public.magic_formula (
   return_on_capital double precision NULL,
   yield_rank integer NULL,
   roc_rank integer NULL,
-  magic_formula_rank integer NULL,
-  latest_quarter_date character varying(255) NULL
+  magic_formula_rank integer NULL
 );
 COMMENT ON COLUMN public.magic_formula.earnings_yield IS 'Measures how much earnings a company generates compared to its price %';
 COMMENT ON COLUMN public.magic_formula.return_on_capital IS 'Shows how efficiently a company uses its capital %';

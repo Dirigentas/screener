@@ -14,10 +14,10 @@ import screener.entity.PiotroskiScore;
 import screener.entity.Rankings;
 import screener.repository.MidStatsRepository;
 import screener.repository.PiotroskiScoreRepository;
-import screener.repository.RankingsRepository;
 import screener.service.MagicFormulaService;
 import screener.service.MarketDataRetievalService;
 import screener.service.MetricPickerService;
+import screener.service.RankingsService;
 import screener.utils.TxtFileReader;
 
 @SpringBootApplication
@@ -59,7 +59,7 @@ public class ScreenerApplication {
             MidStatsRepository midStatsRepository = context.getBean(MidStatsRepository.class);
             PiotroskiScoreRepository piotroskiScoreRepository = context.getBean(PiotroskiScoreRepository.class);
             MagicFormulaService magicFormulaService = context.getBean(MagicFormulaService.class);
-            RankingsRepository rankingsRepository = context.getBean(RankingsRepository.class);
+            RankingsService rankingsService = context.getBean(RankingsService.class, MagicFormulaService.class);
 
             for (String ticker : TICKERS_ALL) {
 
@@ -104,7 +104,7 @@ public class ScreenerApplication {
                 double assetTurnoverPrior = (double) Math.round(revenuePriorTtmM / totalAssetsAtStartPriorM * 100) / 100;
                 double leverage = (double) Math.round(longTermDebtM / averageTotalAssetsM * 100) / 100;
                 double leveragePrior = (double) Math.round(longTermDebtPriorM / averageTotalAssetsPriorM * 100) / 100;
-                double tenCapFcf = (double) Math.round((cashFlowOperationsTtmM + incomeTaxTtmM) / sharesCountM * 100) / 10;
+                double tenCapFcf = (double) Math.round((cashFlowOperationsTtmM - capitalExpendituresTtmM + incomeTaxTtmM) / sharesCountM * 100) / 10;
                 double tenCapEarnings = (double) Math.round((earningsTtmM + incomeTaxTtmM) / sharesCountM * 100) / 10;
 
                 
@@ -172,21 +172,21 @@ public class ScreenerApplication {
                 Rankings rankings = new Rankings();
                 rankings.setTicker(ticker);
                 rankings.setAName(name);
-                rankings.setPiotroskiScore(totalScoreP);
-                rankings.setTenCapFcf(tenCapFcf);
-                rankings.setTenCapEarnings(tenCapEarnings);
                 rankings.setLatestQuarter(latestQuarter);
+                rankings.setPiotroskiScore(totalScoreP);
+                rankings.setTenCapEarnings(tenCapEarnings);
+                rankings.setTenCapFcf(tenCapFcf);
 
 
                 // saving to DB
                 midStatsRepository.save(midStats);
                 piotroskiScoreRepository.save(piotroskiScore);
                 magicFormulaService.createNewCompany(magicFormula);
-                rankingsRepository.save(rankings);
+                rankingsService.createRanking(rankings);
                 
             }
             magicFormulaService.calculateAndSaveRanks();
-            // rankingsRepository.copyFromMagicFormula();
+            rankingsService.syncRankings();
 
             // Shut down the Spring container
             context.close();

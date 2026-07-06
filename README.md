@@ -1,7 +1,4 @@
 ## Roudmap
-    - correct the copying of magic formmula rank to rankings table
-
-
   - all Rule1 metrics
   - all PBT metrics
   - all 'Revolution Investing' metrics
