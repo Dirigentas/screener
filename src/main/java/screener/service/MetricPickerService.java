@@ -344,7 +344,7 @@ public class MetricPickerService {
             .get("series")
             .get("quarterly")
             .get("roaTTM")
-            .get(2)
+            .get(4)
             .get("v")
             .asDouble();
 
