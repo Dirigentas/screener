@@ -1,6 +1,8 @@
 ## Roudmap
-  - all Rule1 metrics
-  - all PBT metrics
+  - create empty columns to mid_data table for missing data for inputing by hand
+  - add all Rule1 calculations to rankings table 
+  - all PBT calculations to rankings table
+  
   - all 'Revolution Investing' metrics
 
   - make that only the first time finnhub profile2 would be called
