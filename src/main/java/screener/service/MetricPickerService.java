@@ -351,26 +351,6 @@ public class MetricPickerService {
         return metric;
     }
     
-    public static double getFinnhubEbitM(String ticker) {
-
-        String path1 = String.format(FINN_METRIC, ticker);
-        JsonNode json1 = JsonFileReader.read(path1);
-
-        double ebitPerShare = 0;
-
-        for (int i = 0; i < 4; i++) {
-            ebitPerShare += json1
-                .get("series")
-                .get("quarterly")
-                .get("ebitPerShare")
-                .get(i)
-                .get("v")
-                .asDouble();
-        }
-
-        return (double) Math.round(ebitPerShare * getSharesCountM(ticker) * 10) / 10;
-    }
-
     public static double getAlphavantageEbitM(String ticker) {
 
         String path = String.format(ALPHA_INCOME, ticker);

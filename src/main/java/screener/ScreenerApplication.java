@@ -71,7 +71,6 @@ public class ScreenerApplication {
                 double evM = MetricPickerService.getCompanyEvM(ticker);
                 double pe = MetricPickerService.getPe(ticker);
                 double ebitAlphM = MetricPickerService.getAlphavantageEbitM(ticker);
-                double ebitFinnM = MetricPickerService.getFinnhubEbitM(ticker);
                 double workingCapitalM = MetricPickerService.getWorkingCapitalM(ticker);
                 double fixedAssetsM = MetricPickerService.getFixedAssetsM(ticker);
                 double cashFlowOperationsTtmM = MetricPickerService.getCashFlowOperationsTtmM(ticker);
@@ -95,9 +94,8 @@ public class ScreenerApplication {
                 
                 
                 // calculations
-                double averageEbitM = (double) Math.round((ebitAlphM + ebitFinnM) / 2 * 10) / 10;
-                double earningsYield = (double) Math.round(averageEbitM / evM * 100 * 10) / 10;
-                double returnOnCapital = (double) Math.round(averageEbitM / (workingCapitalM + fixedAssetsM)* 100 * 10) / 10;
+                double earningsYield = (double) Math.round(ebitAlphM / evM * 100 * 10) / 10;
+                double returnOnCapital = (double) Math.round(ebitAlphM / (workingCapitalM + fixedAssetsM)* 100 * 10) / 10;
                 double grossMargin = (double) Math.round(grossProfitTtmM / revenueTtmM * 10000) / 100;
                 double grossMarginPrior = (double) Math.round(grossProfitPriorTtmM / revenuePriorTtmM * 10000) / 100;
                 double assetTurnover = (double) Math.round(revenueTtmM / totalAssetsAtStartM * 100) / 100;
@@ -112,7 +110,7 @@ public class ScreenerApplication {
                 MidStats midStats = new MidStats();
                 midStats.setTicker(ticker);
                 midStats.setEvM(evM);
-                midStats.setEbitM(averageEbitM);
+                midStats.setEbitM(ebitAlphM);
                 midStats.setWorkingCapitalM(workingCapitalM);
                 midStats.setFixedAssetsM(fixedAssetsM);
                 midStats.setPe(pe);
