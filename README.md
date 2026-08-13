@@ -1,18 +1,12 @@
 ## Roudmap
   - create empty columns to mid_data table for missing data for inputing by hand
-  - add all Rule1 calculations to rankings table 
-  - all PBT calculations to rankings table
   
-  - all 'Revolution Investing' metrics
 
   - make that only the first time finnhub profile2 would be called
   
-  - separate table for risk metrics from google sheets
+
 * combine some methodologies and risk metrics for unified investable metric (just a thought)
-* Explore other data providers: 
-  - Massive (formerly Polygon.io)
-  - Financial Modeling Prep (FMP) (šitas tikrai turi metines ataskaitas)
-  - Twelve Data
+
 
 ## Implemented
 
@@ -28,6 +22,7 @@
 * give a rating for magic formula companies
 * piotrovski score metrics (done: 9 from 9)
 * all TenCap metrics
+* all PBT calculations to rankings table
 
 
 
