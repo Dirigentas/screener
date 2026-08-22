@@ -22,9 +22,6 @@ public class Rankings {
 
     @Column(name = "ten_cap_fcf")
     private double tenCapFcf;
-
-    @Column(name = "ten_cap_earnings")
-    private double tenCapEarnings;
     
     @Column(name = "latest_quarter_date")
     private String latestQuarter;

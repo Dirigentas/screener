@@ -90,7 +90,6 @@ public class ScreenerApplication {
                 double longTermDebtPriorM = MetricPickerService.getLongTermDebtPriorM(ticker);
                 double averageTotalAssetsM = MetricPickerService.getAverageTotalAssetsM(ticker);
                 double averageTotalAssetsPriorM = MetricPickerService.getAverageTotalAssetsPriorM(ticker);
-                double incomeTaxTtmM = MetricPickerService.getIncomeTaxTtmM(ticker);
                 
                 
                 // calculations
@@ -102,8 +101,7 @@ public class ScreenerApplication {
                 double assetTurnoverPrior = (double) Math.round(revenuePriorTtmM / totalAssetsAtStartPriorM * 100) / 100;
                 double leverage = (double) Math.round(longTermDebtM / averageTotalAssetsM * 100) / 100;
                 double leveragePrior = (double) Math.round(longTermDebtPriorM / averageTotalAssetsPriorM * 100) / 100;
-                double tenCapFcf = (double) Math.round((cashFlowOperationsTtmM - capitalExpendituresTtmM + incomeTaxTtmM) / sharesCountM * 100) / 10;
-                double tenCapEarnings = (double) Math.round((earningsTtmM + incomeTaxTtmM) / sharesCountM * 100) / 10;
+                double tenCapFcf = (double) Math.round((cashFlowOperationsTtmM - capitalExpendituresTtmM) / sharesCountM * 100) / 10;
 
                 
                 // mid_stats DB table
@@ -132,7 +130,6 @@ public class ScreenerApplication {
                 midStats.setAssetTurnoverPrior(assetTurnoverPrior);
                 midStats.setLeverage(leverage);
                 midStats.setLeveragePrior(leveragePrior);
-                midStats.setIncomeTaxTtmM(incomeTaxTtmM);
                 
 
                 // magic_formula DB table
@@ -172,7 +169,6 @@ public class ScreenerApplication {
                 rankings.setAName(name);
                 rankings.setLatestQuarter(latestQuarter);
                 rankings.setPiotroskiScore(totalScoreP);
-                rankings.setTenCapEarnings(tenCapEarnings);
                 rankings.setTenCapFcf(tenCapFcf);
 
 
