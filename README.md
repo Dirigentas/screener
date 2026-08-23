@@ -1,4 +1,5 @@
 ## Roudmap
+  - add sec gov endpoints infrastructure
   - create empty columns to mid_data table for missing data for inputing by hand
   
 
@@ -30,3 +31,16 @@
 
 * test db connection, postgres=# for success
 * psql -h localhost -p 5432 -U postgres -d postgres
+
+
+
+https://www.sec.gov/search-filings/edgar-application-programming-interfaces
+
+10 requests per second per IP address.
+Best Practices to Avoid Bans
+Client-Side Throttling: Add a delay or bucket limiter (e.g., maximum 8 requests/sec) to stay comfortably under the threshold.
+
+Reuse HTTP Connections: Keep connections open (Keep-Alive) rather than opening a new TCP connection on every request.
+
+Accept Compression: Pass Accept-Encoding: gzip, deflate to reduce payload sizes and improve latency.
+
