@@ -44,3 +44,5 @@ Reuse HTTP Connections: Keep connections open (Keep-Alive) rather than opening a
 
 Accept Compression: Pass Accept-Encoding: gzip, deflate to reduce payload sizes and improve latency.
 
+add header: User-Agent ArasMinelgaPersonalDev minelga.aras@gmail.com without i gen get ban for going over then limit
+
