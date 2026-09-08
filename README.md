@@ -5,34 +5,26 @@
 
   - make that only the first time finnhub profile2 would be called
   
-
-* combine some methodologies and risk metrics for unified investable metric (just a thought)
+* all PBT calculations to rankings table
 
 
 ## Implemented
 
-* instead of the 'view', placed piotroski score in a separate table
 * Alpha Vantage API provider response was to call the API not more than once per second
 * date of last quater earnings used for calculations
-* delete date from file names
 * all magic formula indicators
 * make separate method for calling only finnhub for newest EV values
 * make safe from no data for all metrics(example: "shortTermDebt" : "None")
 * make that "read data from json" and finhub api would be for all tickers that have files
-* make separate table for intermediate calculations (for debugging odd final metrics)
+* make separate table for intermediate calculations (for debugging final metrics)
 * give a rating for magic formula companies
 * piotrovski score metrics (done: 9 from 9)
 * all TenCap metrics
-* all PBT calculations to rankings table
+
 
 
 
 ## Useful
-
-* test db connection, postgres=# for success
-* psql -h localhost -p 5432 -U postgres -d postgres
-
-
 
 https://www.sec.gov/search-filings/edgar-application-programming-interfaces
 
